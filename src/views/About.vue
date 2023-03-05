@@ -7,7 +7,6 @@
 </template>
 
 <script setup>
-
 const store = useStore();
 let count = 3;
 function increase() {
