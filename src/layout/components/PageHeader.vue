@@ -8,22 +8,27 @@
                 <span class="item" :class="{ active: locale === 'zh-cn' }" @click="changeLanguage('zh-cn')">简体中文</span>/
                 <span class="item" :class="{ active: locale === 'en' }" @click="changeLanguage('en')">EN</span>
             </div>
-            <div class="gap cursor">
-                <router-link to="/personal/message">
-                    <el-icon>
-                        <message></message>
-                    </el-icon>
-                </router-link>
-            </div>
-            <el-dropdown trigger="click">
-                <div class="flex-center cursor">张三<el-icon><caret-bottom></caret-bottom></el-icon></div>
-                <template #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item>{{ t('personalCenter') }}</el-dropdown-item>
-                        <el-dropdown-item>{{ t('logout') }}</el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-            </el-dropdown>
+            <template v-if="isLogin">
+                <div class="gap">
+                    <router-link to="/personal/message">
+                        <el-icon>
+                            <message></message>
+                        </el-icon>
+                    </router-link>
+                </div>
+                <el-dropdown trigger="click">
+                    <div class="flex-center cursor">{{ username }}<el-icon><caret-bottom></caret-bottom></el-icon></div>
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item>{{ t('personalCenter') }}</el-dropdown-item>
+                            <el-dropdown-item>{{ t('logout') }}</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                </el-dropdown>
+            </template>
+            <template v-else-if="$route.name != 'Login'">
+                <router-link to="/login">{{ t('login') }}</router-link>
+            </template>
         </div>
     </div>
 </template>
@@ -37,6 +42,9 @@ function changeLanguage(lang) {
     localStorage.setItem('locale', lang);
 }
 
+const isLogin = ref(false);
+const username = ref('admin');
+isLogin.value = true;
 </script>
 
 <style lang="scss">
