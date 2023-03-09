@@ -17,12 +17,12 @@
 
                     </router-link>
                 </div>
-                <el-dropdown trigger="click">
+                <el-dropdown trigger="click" @command="handleCommand">
                     <div class="flex-center cursor">{{ username }}<el-icon><caret-bottom></caret-bottom></el-icon></div>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item>{{ t('personalCenter') }}</el-dropdown-item>
-                            <el-dropdown-item>{{ t('logout') }}</el-dropdown-item>
+                            <el-dropdown-item command="toPersonal">{{ t('personalCenter') }}</el-dropdown-item>
+                            <el-dropdown-item divided command="toLogout">{{ t('logout') }}</el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
                 </el-dropdown>
@@ -46,7 +46,16 @@ function changeLanguage(lang) {
 const isLogin = ref(false);
 const username = ref('admin');
 isLogin.value = true;
-const unReadCount=ref(1);
+const unReadCount = ref(1);
+
+const router = useRouter();
+const commands = ({
+    toPersonal: () => { router.push('/personal') },
+    toLogout: () => { console.log('退出') }
+});
+function handleCommand(command) {
+    commands[command] && commands[command]();
+}
 </script>
 
 <style lang="scss">
