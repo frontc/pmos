@@ -11,9 +11,10 @@
             <template v-if="isLogin">
                 <div class="gap">
                     <router-link to="/personal/message">
-                        <el-icon>
-                            <message></message>
-                        </el-icon>
+                        <el-badge :is-dot="!!unReadCount"> <el-icon>
+                                <message></message>
+                            </el-icon></el-badge>
+
                     </router-link>
                 </div>
                 <el-dropdown trigger="click">
@@ -45,6 +46,7 @@ function changeLanguage(lang) {
 const isLogin = ref(false);
 const username = ref('admin');
 isLogin.value = true;
+const unReadCount=ref(1);
 </script>
 
 <style lang="scss">
