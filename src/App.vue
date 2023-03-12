@@ -5,8 +5,8 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
 import { elementLocales } from '@/i18n';
-const {locale} = useI18n();
-locale.value=localStorage.getItem('locale')||'zh-cn'
+const { locale } = useI18n();
+locale.value = localStorage.getItem('locale') || 'zh-cn'
 </script>
 
 <style >
@@ -14,16 +14,26 @@ html,
 body {
   height: 100%;
 }
-#app{
+
+#app {
   height: 100%;
   overflow: hidden;
 }
-.flex-center{
+
+.flex-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.cursor{
+
+.cursor {
   cursor: pointer;
 }
-</style>
+
+.txt-c {
+  text-align: center;
+}
+
+.w100p {
+  width: 100%;
+}</style>

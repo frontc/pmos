@@ -72,7 +72,7 @@ export default function request(options) {
                 }
                 console.error(err);
                 if (err.message) {
-                    ElMessage({ message: err.message, type: "error", showClose: true });
+                    ElMessage({ message: err.message, type: 'error', showClose: true });
                 }
                 return Promise.reject(err);
             }
