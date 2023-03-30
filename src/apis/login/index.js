@@ -2,7 +2,7 @@ import request from "@/request";
 
 export const login = (data) => {
     return request({
-        url: "login",
+        url: "user/doLogin",
         method: "post",
         data
     });

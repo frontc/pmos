@@ -3,8 +3,8 @@
         <div class="sign-box">
             <el-form ref="formRef" :model="form" :rules="rules" lable-width="86px">
                 <h3 class="title">{{ t('login') }}</h3>
-                <el-form-item :label="t('form.username')" prop="account">
-                    <el-input v-model="form.account" :placeholder="t('form.usernameHolder')" prefix-icon="user"></el-input>
+                <el-form-item :label="t('form.username')" prop="username">
+                    <el-input v-model="form.username" :placeholder="t('form.usernameHolder')" prefix-icon="user"></el-input>
                 </el-form-item>
                 <el-form-item :label="t('form.password')" prop="password">
                     <el-input v-model="form.password" type="password" :placeholder="t('form.passwordHolder')"
@@ -24,12 +24,12 @@ const router = useRouter();
 const { t } = useI18n();
 const formRef = ref();
 const form = reactive({
-    account: "",
+    username: "",
     password: "",
 })
 const rules = computed(() => {
     return {
-        account: [
+        username: [
             {
                 required: true,
                 message: t('form.usernameHolder'),
@@ -57,9 +57,7 @@ function doLogin() {
         if(!valid) return;
         loading.value=true;
         login(form).then((res)=>{
-            store.commit('use/setToken',res.data.token);
-            store.dispatch('use/refreshInfo');
-            store.commit("setRouteLoaded",false);
+            store.commit('setToken',res.data.tokenValue);
             router.push("/");
         }).finally(()=>{
             loading.value=false;

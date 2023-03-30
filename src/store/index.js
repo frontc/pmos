@@ -1,10 +1,13 @@
 import { createStore } from 'vuex'
 
 export default createStore({
-    state: { count: 0, },
+    state: {
+        token: '',
+    },
     mutations: {
-        increase(state, count) {
-            state.count += count;
+        setToken(state,token){
+            localStorage.setItem('token',token);
+            state.token=token;
         }
     }
 })
