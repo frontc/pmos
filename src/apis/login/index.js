@@ -6,11 +6,18 @@ export const login = (data) => {
         method: "post",
         data
     });
-}
+};
 
 export const getLoginState = () =>{
     return request({
         url:"user/isLogin",
         method:"get"
     });
-}
+};
+
+export const logout = () =>{
+    return request({
+        url:"user/logout",
+        method:"get"
+    });
+};

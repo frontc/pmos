@@ -27,40 +27,43 @@
                     </template>
                 </el-dropdown>
             </template>
-            <template v-else-if="$route.name != 'Login'">
-                <router-link to="/login">{{ t('login') }}</router-link>
-            </template>
         </div>
     </div>
 </template>
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { getLoginState } from '@/apis/login';
+import { getLoginState, logout } from '@/apis/login';
 const { locale, t } = useI18n();
+const store = useStore();
+
 function changeLanguage(lang) {
     locale.value = lang;
     localStorage.setItem('locale', lang);
 }
-
-const isLogin = ref(false);
-const username = ref(localStorage.getItem('username'));
-const token = localStorage.getItem('token');
-if(token){
-    getLoginState().then((res)=>{
-        isLogin.value=true; 
-    }) 
+const isLogin = computed(()=>{return store.state.isLogin;});
+const username = computed(()=>{return store.state.username;});
+const token = computed(()=>{return store.state.token;});
+//如果token过期了，需要作废相关信息
+if (token) {
+    getLoginState().then().catch(()=>{
+        store.commit('logout');
+        router.push("/login");
+    })
 }
 
-const unReadCount = ref(1);
-const store = useStore();
+const unReadCount = ref(0);
 const router = useRouter();
 const commands = ({
     toPersonal: () => { router.push('/personal') },
     //TODO: 完善退出相关逻辑
-    toLogout: () => { 
-        store.commit('logout');
-        router.push("/login");
+    toLogout: () => {
+        logout().then(() => {
+            store.commit('logout');
+            router.push("/login");
+        }).catch(error=>{
+            console.log(error);
+        })
     }
 });
 function handleCommand(command) {
