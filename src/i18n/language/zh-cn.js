@@ -10,5 +10,7 @@ export default{
         password:"密码",
         passwordHolder:"请输入密码",
         passwordError:"请输入至少4个字符的密码",
+        loginSuccess:"登陆成功！",
+        loginFailed:"登陆失败！用户名或密码不正确！",
     }
 };

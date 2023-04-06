@@ -10,5 +10,7 @@ export default{
         password:"Password",
         passwordHolder:"Please enter your password",
         passwordError:"Please enter a password of at least 4 characters",
+        loginSuccess:"Login Success!",
+        loginFailed:"Login Failed！Please check your username or password!",
     }
 };

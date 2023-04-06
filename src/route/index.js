@@ -50,7 +50,7 @@ const router = createRouter({
 
 //如果是需要认证的页面，没有token，就跳转到登陆页面
 router.beforeEach((to) => {
-    const token = localStorage.getItem("pm_token");
+    const token = localStorage.getItem("token");
     if (to.meta.requireAuth && !token) {
         return { name: "Login" }
     }

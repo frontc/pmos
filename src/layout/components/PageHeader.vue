@@ -36,7 +36,7 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-
+import { getLoginState } from '@/apis/login';
 const { locale, t } = useI18n();
 function changeLanguage(lang) {
     locale.value = lang;
@@ -44,8 +44,14 @@ function changeLanguage(lang) {
 }
 
 const isLogin = ref(false);
-const username = ref('admin');
-isLogin.value = true;
+const username = ref(localStorage.getItem('username'));
+const token = localStorage.getItem('token');
+if(token){
+    getLoginState().then((res)=>{
+        isLogin.value=true; 
+    }) 
+}
+
 const unReadCount = ref(1);
 
 const router = useRouter();

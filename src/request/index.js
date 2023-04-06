@@ -10,7 +10,7 @@ export default function request(options) {
         instance.interceptors.request.use(
             (config) => {
                 // 从缓存中取出token
-                let token = localStorage.getItem("pm_token");
+                let token = localStorage.getItem("token");
                 if (token) {
                     config.headers.token = token;
                 } else {

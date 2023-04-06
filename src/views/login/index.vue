@@ -52,12 +52,13 @@ const rules = computed(() => {
 const loading = ref(false);
 const store = useStore();
 function doLogin() {
-    // ElMessage({message:"test",type:"error",showClose:true});
     formRef.value.validate((valid)=>{
         if(!valid) return;
         loading.value=true;
         login(form).then((res)=>{
             store.commit('setToken',res.data.tokenValue);
+            store.commit('setUsername',res.data.tag);
+            ElMessage({message:t('form.loginSuccess'),type:'success',showClose:true});
             router.push("/");
         }).finally(()=>{
             loading.value=false;

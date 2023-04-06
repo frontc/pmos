@@ -7,3 +7,10 @@ export const login = (data) => {
         data
     });
 }
+
+export const getLoginState = () =>{
+    return request({
+        url:"user/isLogin",
+        method:"get"
+    });
+}
