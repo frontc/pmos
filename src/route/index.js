@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import Layout from '@/layout/index.vue';
+import PageFrame from "@/layout/components/PageFrame.vue";
 
 const routes = [
     {
@@ -29,10 +30,67 @@ const routes = [
                 }]
             },
             {
-                path: "app",
-                name: "App",
+                path: "expenditure",
+                name: "Expenditure",
                 meta: { requireAuth: true },
-                component: () => import('@/views/app/index.vue'),
+                redirect:'/expenditure/own-manpower',
+                component:PageFrame,
+                children:[
+                    {
+                        path:"own-manpower",
+                        name:"OwnManpower",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/expenditure/OwnManpower.vue')
+                    },
+                    {
+                        path:"outsourced-manpower",
+                        name:"OutsourcedManpower",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/expenditure/OutsourcedManpower.vue')
+                    },
+                ]
+            },
+            {
+                path: "budget",
+                name: "Budget",
+                meta: { requireAuth: true },
+                redirect:'/budget/dept-budget',
+                component:PageFrame,
+                children:[
+                    {
+                        path:"dept-budget",
+                        name:"DeptBudget",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/budget/DeptBudget.vue')
+                    },
+                    {
+                        path:"project-budget",
+                        name:"ProjectBudget",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/budget/ProjectBudget.vue')
+                    },
+                ]
+            },
+            {
+                path: "basic",
+                name: "Basic",
+                meta: { requireAuth: true },
+                redirect:'/basic/project-list',
+                component:PageFrame,
+                children:[
+                    {
+                        path:"project-list",
+                        name:"ProjectList",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/basic/ProjectList.vue')
+                    },
+                    {
+                        path:"bussiness-list",
+                        name:"BussinessList",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/basic/BussinessList.vue')
+                    },
+                ]
             },
         ],
     },

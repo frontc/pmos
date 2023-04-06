@@ -15,4 +15,15 @@ export default{
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
+    menu:{
+        Expenditure:"Expenditure",
+        OwnManpower:"Own Manpower",
+        OutsourcedManpower:"Outsourced Manpower",
+        Budget:"Budget",
+        DeptBudget:"Department Budget",
+        ProjectBudget:"Project Budget",
+        Basic:"Basic Data",
+        BussinessList:"Bussiness Category",
+        ProjectList:"Project List",
+    }
 };

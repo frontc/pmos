@@ -15,4 +15,15 @@ export default{
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",
+    menu:{
+        Expenditure:"实际发生",
+        OwnManpower:"自有人力",
+        OutsourcedManpower:"外协人力",
+        Budget:"科技预算",
+        DeptBudget:"部门预算",
+        ProjectBudget:"项目预算",
+        Basic:"基础数据",
+        BussinessList:"业务类别",
+        ProjectList:"项目清单",
+    }
 };
