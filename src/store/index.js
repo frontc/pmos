@@ -13,6 +13,12 @@ export default createStore({
         setUsername(state,username){
             localStorage.setItem('username',username);
             state.username=username;
+        },
+        logout(state){
+            localStorage.removeItem('token');
+            localStorage.removeItem('username');
+            state.token='';
+            state.username='';
         }
     },
 })

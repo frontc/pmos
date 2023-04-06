@@ -53,11 +53,15 @@ if(token){
 }
 
 const unReadCount = ref(1);
-
+const store = useStore();
 const router = useRouter();
 const commands = ({
     toPersonal: () => { router.push('/personal') },
-    toLogout: () => { console.log('退出') }
+    //TODO: 完善退出相关逻辑
+    toLogout: () => { 
+        store.commit('logout');
+        router.push("/login");
+    }
 });
 function handleCommand(command) {
     commands[command] && commands[command]();
