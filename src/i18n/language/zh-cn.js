@@ -12,5 +12,7 @@ export default{
         passwordError:"请输入至少4个字符的密码",
         loginSuccess:"登陆成功！",
         loginFailed:"登陆失败！用户名或密码不正确！",
-    }
+    },
+    tips404:"页面找不到了...",
+    backHome:"返回首页",
 };

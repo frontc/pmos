@@ -12,5 +12,7 @@ export default{
         passwordError:"Please enter a password of at least 4 characters",
         loginSuccess:"Login Success!",
         loginFailed:"Login Failed！Please check your username or password!",
-    }
+    },
+    tips404:"Sorry,Page Not Found!",
+    backHome:"Back to HomePage",
 };
