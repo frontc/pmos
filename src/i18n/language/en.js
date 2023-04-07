@@ -25,5 +25,19 @@ export default{
         Basic:"Basic Data",
         BussinessList:"Bussiness Category",
         ProjectList:"Project List",
-    }
+    },    
+    action:{
+        operation:"Operation",
+        add:"Add",
+        edit:"Edit",
+        delete:"Delete",
+        batchDelete:"Batch Delete",
+        confirm:"Confirm",
+        cancel:"Cancel",
+    },
+    tips:{
+        deleteConfirm:"Delete Confirm",
+        deleteTitle:"Delete Title",
+        success:"Success",
+    },
 };

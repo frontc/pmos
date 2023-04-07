@@ -25,5 +25,19 @@ export default{
         Basic:"基础数据",
         BussinessList:"业务类别",
         ProjectList:"项目清单",
-    }
+    },
+    action:{
+        operation:"操作",
+        add:"新增",
+        edit:"编辑",
+        delete:"删除",
+        batchDelete:"批量删除",
+        confirm:"确定",
+        cancel:"取消",
+    },
+    tips:{
+        deleteConfirm:"确认删除",
+        deleteTitle:"删除数据",
+        success:"成功",
+    },
 };
