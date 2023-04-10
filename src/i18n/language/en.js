@@ -12,6 +12,8 @@ export default{
         passwordError:"Please enter a password of at least 4 characters",
         loginSuccess:"Login Success!",
         loginFailed:"Login Failed！Please check your username or password!",
+        projectName:"Project Name",
+        bizType:"Business Type",
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
@@ -34,10 +36,19 @@ export default{
         batchDelete:"Batch Delete",
         confirm:"Confirm",
         cancel:"Cancel",
+        search:"Search",
     },
     tips:{
         deleteConfirm:"Delete Confirm",
         deleteTitle:"Delete Title",
         success:"Success",
+    },
+    thead:{
+        uid:"ID",
+        projectCode:"Project Code",
+        projectName:"Project Name",
+        bizType1:"Biz Type 1",
+        bizType2:"Biz Type 2",
+        costDept:"Cost Dept",
     },
 };

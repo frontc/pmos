@@ -12,6 +12,8 @@ export default{
         passwordError:"请输入至少4个字符的密码",
         loginSuccess:"登陆成功！",
         loginFailed:"登陆失败！用户名或密码不正确！",
+        projectName:"项目名称",
+        bizType:"业务类型",
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",
@@ -34,10 +36,19 @@ export default{
         batchDelete:"批量删除",
         confirm:"确定",
         cancel:"取消",
+        search:"查询",
     },
     tips:{
         deleteConfirm:"确认删除",
         deleteTitle:"删除数据",
         success:"成功",
+    },
+    thead:{
+        uid:"ID",
+        projectCode:"项目编号",
+        projectName:"项目名称",
+        bizType1:"业务大类",
+        bizType2:"业务小类",
+        costDept:"费用归属",
     },
 };
