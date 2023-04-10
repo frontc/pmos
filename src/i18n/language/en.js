@@ -14,6 +14,7 @@ export default{
         loginFailed:"Login Failed！Please check your username or password!",
         projectName:"Project Name",
         bizType:"Business Type",
+        costDept:"Cost Dept",
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",

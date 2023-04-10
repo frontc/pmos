@@ -4,12 +4,15 @@
         <div class="toolbar">
             <el-form :inline="true" :model="filters">
                 <el-form-item>
-                    <el-input v-model="filters.projectName" :placeholder="t('form.projectName')"></el-input>
+                    <el-input v-model="filters.projectName" :placeholder="t('form.projectName')" clearable></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-cascader :options="bizTypeTree" :props="cascaderProps" :collapse-tags=true
                     :collapse-tags-tooltip=true v-model="filters.bizTypeSelections"
                     clearable :placeholder="t('form.bizType')" />
+                </el-form-item>
+                <el-form-item>
+                    <el-input v-model="filters.costDept" :placeholder="t('form.costDept')" clearable></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button icon="search" type="primary" @click="findPage">{{ t('action.search') }}</el-button>
@@ -30,6 +33,7 @@ const tableRef = ref();
 const filters = reactive({
     projectName: '',
     bizTypeSelections:[],
+    costDept:'',
 });
 const cascaderProps = {
     multiple: true,

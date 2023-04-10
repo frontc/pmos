@@ -14,6 +14,7 @@ export default{
         loginFailed:"登陆失败！用户名或密码不正确！",
         projectName:"项目名称",
         bizType:"业务类型",
+        costDept:"成本归属部门",
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",
