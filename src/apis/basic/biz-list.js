@@ -6,3 +6,17 @@ export const getBizTypeTree = ()=>{
         method:"get",
     });
 }
+
+export const getBizType1 = ()=>{
+    return request({
+        url:"/basic/getBizType1",
+        method:"get",
+    });
+}
+
+export const getBizTypeSons = (data)=>{
+    return request({
+        url:"/basic/getBizTypeSons?parentCode="+data,
+        method:"get",
+    });
+}

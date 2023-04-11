@@ -15,6 +15,8 @@ export default{
         projectName:"Project Name",
         bizType:"Business Type",
         costDept:"Cost Dept",
+        select:"Select",
+
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
