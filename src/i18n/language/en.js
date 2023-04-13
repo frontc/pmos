@@ -16,6 +16,11 @@ export default{
         bizType:"Business Type",
         costDept:"Cost Dept",
         select:"Select",
+        projectNameRequired:"Please enter project name",
+        projectNameError:"Project name's length must between 2 and 60",
+        bizType1Required:"Business Type should not be empty",
+        bizType2Required:"Business Type should not be empty",
+        costDeptRequired:"Please choose cost department",
 
     },
     tips404:"Sorry,Page Not Found!",
@@ -40,6 +45,7 @@ export default{
         confirm:"Confirm",
         cancel:"Cancel",
         search:"Search",
+        submit:"Submit",
     },
     tips:{
         deleteConfirm:"Delete Confirm",

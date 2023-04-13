@@ -22,12 +22,14 @@
                 </el-form-item>
             </el-form>
         </div>
+        <!--表格区-->
         <cm-table ref="tableRef" :get-page="listPage" :filters="filters" :columns="columns" :showOperation="true"
             :showBatchDelete="false" @handleEdit="handleEdit">
         </cm-table>
     </div>
+    <!--新增/编辑弹框-->
     <el-dialog :title="isEdit ? t('action.edit') : t('action.add')" v-model="dialogVisible" draggable width="40%"
-        :close-on-click-modal="false" @close="closeDialog">
+        :close-on-click-modal="false" @close="closeDialog" center>
         <el-form ref="formRef" :model="form" :rules="rules" label-width="80px" label-position="right">
             <el-form-item :label="t('thead.projectCode')" prop="projectCode">
                 <el-input v-model="form.projectCode"></el-input>
@@ -45,12 +47,22 @@
                     <el-option v-for="item in bizType2Options" :key="item.value" :label="item.label" :value="item.label" />
                 </el-select>
             </el-form-item>
+            <el-form-item :label="t('thead.costDept')" prop="costDept">
+                <el-select v-model="form.costDept" clearable :placeholder="t('form.select')">
+                    <el-option v-for="item in deptOptions" :key="item.uid" :label="item.deptName" :value="item.deptName" />
+                </el-select>
+            </el-form-item>
         </el-form>
+        <template #footer>
+            <el-button @click="closeDialog">{{ t("action.cancel") }}</el-button>
+            <el-button type="primary" :loading="formLoading" @click="handleSubmit">{{ t("action.submit") }}</el-button>
+        </template>
     </el-dialog>
 </template>
 <script setup>
 import { listPage } from '@/apis/basic/project-list';
-import { getBizTypeTree,getBizType1,getBizTypeSons } from '@/apis/basic/biz-list';
+import { getBizTypeTree, getBizType1, getBizTypeSons } from '@/apis/basic/biz-list';
+import { getDepartments } from '../../apis/basic/departments';
 
 const { t } = useI18n();
 const tableRef = ref();
@@ -88,25 +100,47 @@ const formRef = ref();
 const form = reactive({
     projectCode: '',
     projectName: '',
-    bizType1:'',
-    bizType2:'',
+    bizType1: '',
+    bizType2: '',
+    costDept: '',
+});
+const rules = computed(() => {
+    return {
+        projectName: [
+            { required: true, message: t('form.projectNameRequired'), trigger: ['blur', 'change'] },
+            { min: 2, max: 60, message: t('form.projectNameError'), trigger: ['blur', 'change'] }
+        ],
+        bizType1: [
+            { required: true, message: t('form.bizType1Required'), trigger: ['blur', 'change'] },
+        ],
+        bizType2: [
+            { required: true, message: t('form.bizType2Required'), trigger: ['blur', 'change'] },
+        ],
+        costDept: [
+            { required: true, message: t('form.costDeptRequired'), trigger: ['blur', 'change'] },
+        ],
+    }
 });
 const bizType1Options = ref([]);
-getBizType1().then((res)=>{
-    bizType1Options.value=res.data;
+getBizType1().then((res) => {
+    bizType1Options.value = res.data;
 });
-const bizType2Options=ref([]);
-function refreshBizType2(){
-    form.bizType2='';
-    if(form.bizType1===''||form.bizType1===null){
-        bizType2Options.value=[];
-    }else{
-        const bizTypeObj = bizType1Options.value.find(item=>item.label===form.bizType1);
-        getBizTypeSons(bizTypeObj.value).then((res)=>{
-            bizType2Options.value=res.data;
+const bizType2Options = ref([]);
+function refreshBizType2() {
+    form.bizType2 = '';
+    if (form.bizType1 === '' || form.bizType1 === null) {
+        bizType2Options.value = [];
+    } else {
+        const bizTypeObj = bizType1Options.value.find(item => item.label === form.bizType1);
+        getBizTypeSons(bizTypeObj.value).then((res) => {
+            bizType2Options.value = res.data;
         })
     }
 }
+const deptOptions = ref([]);
+getDepartments().then((res) => {
+    deptOptions.value = res.data;
+});
 
 function handleAdd() {
     dialogVisible.value = true;
