@@ -24,7 +24,7 @@
         </div>
         <!--表格区-->
         <cm-table ref="tableRef" :get-page="listPage" :filters="filters" :columns="columns" :showOperation="true"
-            :showBatchDelete="false" @handleEdit="handleEdit">
+            :showBatchDelete="false" @handleEdit="handleEdit" @handleDelete="handleDelete">
         </cm-table>
     </div>
     <!--新增/编辑弹框-->
@@ -38,7 +38,7 @@
                 <el-input v-model="form.projectName"></el-input>
             </el-form-item>
             <el-form-item :label="t('thead.bizType1')" prop="bizType1">
-                <el-select v-model="form.bizType1" clearable :placeholder="t('form.select')" @change="refreshBizType2">
+                <el-select v-model="form.bizType1" clearable :placeholder="t('form.select')" @change="refreshBizType2('')">
                     <el-option v-for="item in bizType1Options" :key="item.value" :label="item.label" :value="item.label" />
                 </el-select>
             </el-form-item>
@@ -54,15 +54,16 @@
             </el-form-item>
         </el-form>
         <template #footer>
-            <el-button @click="closeDialog">{{ t("action.cancel") }}</el-button>
+            <el-button @click="handleEmpty" :disabled="isEdit">{{ t("action.empty") }}</el-button>
             <el-button type="primary" :loading="formLoading" @click="handleSubmit">{{ t("action.submit") }}</el-button>
         </template>
     </el-dialog>
 </template>
 <script setup>
-import { listPage } from '@/apis/basic/project-list';
+import { listPage, submitPage,remove } from '@/apis/basic/project-list';
 import { getBizTypeTree, getBizType1, getBizTypeSons } from '@/apis/basic/biz-list';
-import { getDepartments } from '../../apis/basic/departments';
+import { getDepartments } from '@/apis/basic/departments';
+
 
 const { t } = useI18n();
 const tableRef = ref();
@@ -98,6 +99,7 @@ const isEdit = ref(false);
 const dialogVisible = ref(false);
 const formRef = ref();
 const form = reactive({
+    uid: '',
     projectCode: '',
     projectName: '',
     bizType1: '',
@@ -126,8 +128,8 @@ getBizType1().then((res) => {
     bizType1Options.value = res.data;
 });
 const bizType2Options = ref([]);
-function refreshBizType2() {
-    form.bizType2 = '';
+function refreshBizType2(value) {
+    form.bizType2 = value;
     if (form.bizType1 === '' || form.bizType1 === null) {
         bizType2Options.value = [];
     } else {
@@ -148,11 +150,43 @@ function handleAdd() {
 }
 
 function handleEdit(row) {
-    console.log(row);
+    dialogVisible.value = true;
+    isEdit.value = true;
+    Object.assign(form, row);
+    refreshBizType2(row.bizType2);
+}
+
+function handleEmpty() {
+    let initForm = {
+        uid: '',
+        projectCode: '',
+        projectName: '',
+        bizType1: '',
+        bizType2: '',
+        costDept: '',
+    };
+    Object.assign(form, initForm);
 }
 
 function closeDialog() {
-    console.log(form);
+    dialogVisible.value = false;
+}
+
+const formLoading = ref(false);
+function handleSubmit() {
+    formLoading.value = true;
+    if (!isEdit) { form.uid = ''; }
+    submitPage(form).then(() => {
+        findPage();
+        closeDialog();
+        handleEmpty();
+        ElMessage({ message: t('tips.success'), type: "success" });
+    }).catch().finally(formLoading.value = false);
+}
+
+function handleDelete(ids){
+    remove(ids);
+    findPage();
 }
 
 </script>

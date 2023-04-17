@@ -174,7 +174,7 @@
   
   // 删除
   function handleDelete(row) {
-    onDelete(row.id);
+    onDelete(row.uid);
   }
   
   const selections = ref([]);
@@ -183,7 +183,7 @@
   }
   // 批量删除
   function handleBatchDelete() {
-    let ids = selections.value.map((item) => item.id).toString();
+    let ids = selections.value.map((item) => item.uid).toString();
     onDelete(ids);
   }
   

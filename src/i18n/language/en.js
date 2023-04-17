@@ -46,6 +46,7 @@ export default{
         cancel:"Cancel",
         search:"Search",
         submit:"Submit",
+        empty:"Empty",
     },
     tips:{
         deleteConfirm:"Delete Confirm",

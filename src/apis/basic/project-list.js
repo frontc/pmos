@@ -7,3 +7,19 @@ export const listPage = (data)=>{
         data
     });
 }
+
+export const submitPage = (data)=>{
+    return request({
+        url:"/basic/updateProjectMappingInfo",
+        method:"post",
+        data
+    });
+}
+
+export const remove = (data)=>{
+    return request({
+        url:"/basic/removeProjectMappingInfo",
+        method:"post",
+        data
+    });
+}

@@ -45,6 +45,7 @@ export default{
         cancel:"取消",
         search:"查询",
         submit:"提交",
+        empty:"清空",
     },
     tips:{
         deleteConfirm:"确认删除",
