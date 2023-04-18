@@ -20,6 +20,12 @@ export default{
         projectNameError:"Project name's length must between 2 and 60",
         bizType1Required:"Business Type should not be empty",
         bizType2Required:"Business Type should not be empty",
+        bizTypeRequired:"Business Type should not be empty",
+        bizTypeCodeRequired:"Please Input Biz Type Code",
+        bizTypeCode1LengthError:"Length must be Two",
+        bizTypeCode2LengthError:"Length must be Six",
+        bizTypeCode2TypoError:"Code can only start with parent code",
+        bizTypeCodeRepeatedError:"Biz Type Code is duplication",
         costDeptRequired:"Please choose cost department",
 
     },
@@ -53,6 +59,7 @@ export default{
         deleteConfirm:"Delete Confirm",
         deleteTitle:"Delete Title",
         success:"Success",
+        validateFailed:"Validate Failed",
     },
     thead:{
         uid:"ID",
@@ -61,5 +68,10 @@ export default{
         bizType1:"Biz Type 1",
         bizType2:"Biz Type 2",
         costDept:"Cost Dept",
+        bizTypeCode:"Biz Type Code",
+        bizType:"Biz Type",
+        relatedDept:"Related Dept",
+        parentCode:"Parent Code",
+        levelID:"Level ID",
     },
 };

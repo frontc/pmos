@@ -2,7 +2,7 @@ export const menuTreeData =[
     {
         name:'Expenditure',
         path:'/expenditure',
-        icon:"menu",
+        icon:"list",
         children:[
             {
                 name:'OwnManpower',
@@ -19,7 +19,7 @@ export const menuTreeData =[
     {
         name:'Budget',
         path:'/budget',
-        icon:"menu",
+        icon:"stamp",
         children:[
             {
                 name:'DeptBudget',
@@ -36,7 +36,7 @@ export const menuTreeData =[
     {
         name:'Basic',
         path:'/basic',
-        icon:"menu",
+        icon:"grid",
         children:[
             {
                 name:'BussinessList',

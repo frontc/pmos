@@ -20,3 +20,34 @@ export const getBizTypeSons = (data)=>{
         method:"get",
     });
 }
+
+export const listPage = (data)=>{
+    return request({
+        url:"/basic/getBizTypes",
+        method:"post",
+        data
+    });
+}
+
+export const submitPage = (data)=>{
+    return request({
+        url:"/basic/updateBizType",
+        method:"post",
+        data
+    });
+}
+
+export const remove = (data)=>{
+    return request({
+        url:"/basic/removeBizType",
+        method:"post",
+        data
+    });
+}
+
+export const checkBizTypeCode = (data)=>{
+    return request({
+        url:"/basic/checkBizTypeCode?bizTypeCode="+data,
+        method:"get",
+    });
+}
