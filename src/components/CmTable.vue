@@ -22,25 +22,23 @@
           <template #default="{ row }">
             <template v-for="(opr, i) in operations" :key="i">
               <template v-if="isShow(opr.show, row)">
-                <el-button
+                <el-link
+                type="primary"
                   v-if="opr.type === 'edit'"
-                  type="text"
                   :disabled="isDisabled(opr.disabled, row)"
                   @click="handleEdit(row)"
-                >{{ t('action.edit') }}</el-button>
-                <el-button
+                >{{ t('action.edit') }}</el-link>
+                <el-link
                   v-else-if="opr.type === 'delete'"
-                  type="text"
-                  class="danger"
+                  type="danger"
                   :disabled="isDisabled(opr.disabled, row)"
                   @click="handleDelete(row)"
-                >{{ t('action.delete') }}</el-button>
-                <el-button
+                >{{ t('action.delete') }}</el-link>
+                <el-link
                   v-else
-                  type="text"
                   :disabled="isDisabled(opr.disabled, row)"
                   @click="opr.onClick(row)"
-                >{{ opr.label }}</el-button>
+                >{{ opr.label }}</el-link>
               </template>
             </template>
           </template>
@@ -60,7 +58,7 @@
           v-model:currentPage="pageRequest.pageNum"
           v-model:page-size="pageRequest.pageSize"
           :total="data.totalSize || 0"
-          :page-sizes="[10, 20, 50, 100, 200]"
+          :page-sizes="[10, 20, 50, 100, 200,1000]"
           layout="total, prev, pager, next, sizes, jumper"
           @size-change="handleSizeChange"
           @current-change="handlePageChange"
@@ -101,7 +99,6 @@
       default: 185
     },
     showBatchDelete: {
-      // 是否显示操作组件
       type: Boolean,
       default: true,
     },
@@ -231,4 +228,8 @@
   .danger {
     color: var(--el-color-danger) !important;
   }
+
+  .el-link {
+  margin-right: 8px;
+}
   </style>
