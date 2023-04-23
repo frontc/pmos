@@ -7,6 +7,7 @@ const routes = [
         path: '/',
         name: 'Home',
         component: Layout,
+        redirect:'/expenditure/own-manpower',
         children: [
             {
                 path: "login",
@@ -103,7 +104,7 @@ const routes = [
 ]
 const router = createRouter({
     history: createWebHashHistory(process.env.BASE_URL),
-    routes
+    routes,
 })
 
 //如果是需要认证的页面，没有token，就跳转到登陆页面

@@ -25,11 +25,11 @@
         </div>
         <!--表格区-->
         <cm-table id="data-table" ref="tableRef" :get-page="listPage" :filters="filters" :columns="columns"
-            :showOperation="true" :showBatchDelete="false" @handleEdit="handleEdit" @handleDelete="handleDelete">
+            :showOperation="true" :showBatchDelete="false" @handleEdit="handleEdit" @handleDelete="handleDelete"  :max-height="tableHeight">
         </cm-table>
     </div>
     <!--新增/编辑弹框-->
-    <el-dialog :title="isEdit ? t('action.edit') : t('action.add')" v-model="dialogVisible" draggable width="40%"
+    <el-dialog :title="isEdit ? t('action.edit') : t('action.add')" v-model="dialogVisible" draggable width="50%"
         :close-on-click-modal="false" @close="closeDialog" center>
         <el-form ref="formRef" :model="form" :rules="rules" label-width="120px" label-position="right">
             <el-row>
@@ -239,7 +239,13 @@ const exportExcel = () => {
     }
     return wbout;
 }
-
+const tableHeight = ref();
+onMounted(() => {
+    tableHeight.value = window.innerHeight - tableRef.value.$el.offsetTop - 85;
+    window.onresize = () => {
+        tableHeight.value = window.innerHeight - tableRef.value.$el.offsetTop - 85;
+    }
+})
 </script>
 <style lang="scss">
 .export {

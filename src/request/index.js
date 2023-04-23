@@ -4,11 +4,18 @@ import router from "@/route";
 import { ElMessage } from "element-plus";
 
 export default function request(options) {
+
     return new Promise((resolve, reject) => {
+        // if(options.url.indexOf('upload')!==-1){
+        //     config.headers['Content-Type']='multipart/form-data';
+        // }
         const instance = axios.create({ ...config });
+        console.log({...config});
         // 定义request请求拦截器
         instance.interceptors.request.use(
             (config) => {
+                console.log('config:' + config.headers['Content-Type']);
+                console.log(config.data);
                 // 从缓存中取出token
                 let token = localStorage.getItem("token");
                 if (token) {
