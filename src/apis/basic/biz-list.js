@@ -51,3 +51,12 @@ export const checkBizTypeCode = (data)=>{
         method:"get",
     });
 }
+
+export const download = ()=>{
+    return request({
+        url:"/basic/bizType/download/",
+        method:"post",
+        responseType:"blob",
+        // data:"month",
+    })
+}

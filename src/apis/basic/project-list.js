@@ -23,3 +23,12 @@ export const remove = (data)=>{
         data
     });
 }
+
+export const download = ()=>{
+    return request({
+        url:"/basic/projectMappingInfo/download/",
+        method:"post",
+        responseType:"blob",
+        // data:"month",
+    })
+}
