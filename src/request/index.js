@@ -10,12 +10,12 @@ export default function request(options) {
         //     config.headers['Content-Type']='multipart/form-data';
         // }
         const instance = axios.create({ ...config });
-        console.log({...config});
+        // console.log({...config});
         // 定义request请求拦截器
         instance.interceptors.request.use(
             (config) => {
-                console.log('config:' + config.headers['Content-Type']);
-                console.log(config.data);
+                // console.log('config:' + config.headers['Content-Type']);
+                // console.log(config.data);
                 // 从缓存中取出token
                 let token = localStorage.getItem("token");
                 if (token) {
@@ -99,7 +99,8 @@ export default function request(options) {
                  * -1正常的失败
                  * -2登录失效，需要跳回登录页面
                  */
-                if (res.code === 200) {
+                
+                if (res.code === 200 || options.url.indexOf('download')!==-1) {
                     resolve(res);
                 } else {
                     if (res.code === -2) {

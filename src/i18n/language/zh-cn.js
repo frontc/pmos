@@ -34,6 +34,7 @@ export default{
         month:"月份",
         selectFile:"选择文件",
         upload:"上传",
+        download:"下载",
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",
@@ -66,6 +67,11 @@ export default{
         deleteTitle:"删除数据",
         success:"成功",
         validateFailed:"校验失败",
+        monthRequired:"请选择月份",
+        fileRequired:"请选择文件",
+        uploadWarning:"上传将清除现有该月数据，建议先导出备份，确认导入?",
+        warning:"警告",
+        successImport:"成功导入数据：",
     },
     thead:{
         uid:"ID",
@@ -87,5 +93,9 @@ export default{
         workHours:"工时",
         workDate:"报工日期",
         workDesc:"工作描述",
+    },
+    dialog:{
+        export:"数据导出",
+        import:"数据导入",
     },
 };

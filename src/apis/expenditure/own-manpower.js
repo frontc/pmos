@@ -19,3 +19,12 @@ export const upload =(month,file)=>{
         data:file
     })
 }
+
+export const download = (month)=>{
+    return request({
+        url:"/manhour/download/"+month,
+        method:"post",
+        responseType:"blob",
+        data:month,
+    })
+}

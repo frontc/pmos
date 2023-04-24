@@ -34,6 +34,7 @@ export default{
         month:"Month",
         selectFile:"Select File",
         upload:"Upload",
+        download:"Download",
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
@@ -66,6 +67,11 @@ export default{
         deleteTitle:"Delete Title",
         success:"Success",
         validateFailed:"Validate Failed",
+        monthRequired:"Please choose month",
+        fileRequired:"Please choose file",
+        uploadWarning:"The upload will overwrite the existing data of the month, It is recommended to export the backup first, Please confirm!",
+        warning:"Warning",
+        successImport:"Success Import Records: ",
     },
     thead:{
         uid:"ID",
@@ -87,5 +93,9 @@ export default{
         workHours:"Work Hours",
         workDate:"Work Date",
         workDesc:"Work Desc",
+    },
+    dialog:{
+        export:"Data Export",
+        import:"Data Import",
     },
 };

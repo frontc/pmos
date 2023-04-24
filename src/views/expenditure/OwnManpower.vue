@@ -38,7 +38,7 @@
                 </el-form-item>
                 <!--进入维护页面-->
                 <el-form-item class="maintenance">
-                    <el-button icon="tools" type="default" @click="showMaintenanceDialog" circle></el-button>
+                    <el-button icon="tools" type="default" @click="showDialog" circle></el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -54,25 +54,19 @@
             <template #header>
                 <div class="card-header">
                     <el-icon size="large">
-                        <Upload />
-                    </el-icon><span class="card-header-title">数据导入</span>
+                        <Download />
+                    </el-icon><span class="card-header-title">{{ t('dialog.export') }}</span>
                 </div>
             </template>
             <div>
-                <el-row>
-
-                    <el-upload ref="uploadRef" action :http-request="uploadRequest" v-model:file-list="fileList"
-                        :auto-upload="false" :limit="1" accept=".xls,.xlsx">
-                        <span class="margin_10">月份</span>
-                        <!--月份下拉框-->
-                        <el-select v-model="uploadMonth">
-                            <el-option v-for="item in monthOptions" :key="item" :label="item" :value="item" />
-                        </el-select>
-                        <el-button type="primary" class="margin_10" slot="trigger">{{ t('form.selectFile') }}</el-button>
-                    </el-upload>
-                    <el-button type="primary" @click="submitUpload" class="margin_10"
-                        slot="default">{{ t('form.upload') }}</el-button>
-                </el-row>
+                <span class="margin_10">{{ t('form.month') }}</span>
+                <!--月份下拉框-->
+                <el-select v-model="downloadMonth">
+                    <el-option v-for="item in monthOptions" :key="item" :label="item" :value="item" />
+                </el-select>
+                <el-button type="primary" @click="doDownload" class="margin_10" slot="default" :loading="downloading">{{
+                    t('form.download')
+                }}</el-button>
             </div>
         </el-card>
         <el-divider />
@@ -80,25 +74,35 @@
             <template #header>
                 <div class="card-header">
                     <el-icon size="large">
-                        <Download />
-                    </el-icon><span class="card-header-title">数据导出</span>
+                        <Upload />
+                    </el-icon><span class="card-header-title">{{ t('dialog.import') }}</span>
                 </div>
             </template>
-            <div>内容</div>
+            <div>
+                <el-row>
+                    <el-upload ref="uploadRef" action :http-request="uploadRequest" v-model:file-list="fileList"
+                        :auto-upload="false" :limit="1" accept=".xls,.xlsx">
+                        <span class="margin_10">{{ t('form.month') }}</span>
+                        <!--月份下拉框-->
+                        <el-select v-model="uploadMonth">
+                            <el-option v-for="item in monthOptions" :key="item" :label="item" :value="item" />
+                        </el-select>
+                        <el-button type="primary" class="margin_10" slot="trigger">{{ t('form.selectFile') }}</el-button>
+                    </el-upload>
+                    <el-button type="primary" @click="submitUpload" class="margin_10" slot="default" :loading="uploading">{{ t('form.upload')
+                    }}</el-button>
+                </el-row>
+            </div>
         </el-card>
+
+
     </el-dialog>
 </template>
 <script setup>
 import { getDepartments } from '@/apis/basic/departments';
 import { getMonths } from '@/apis/basic/base';
 import { defaultDate } from '@/toolkit';
-import { listPage,upload } from '@/apis/expenditure/own-manpower';
-
-import { getBizType1, submitPage, checkBizTypeCode } from '@/apis/basic/biz-list';
-
-import * as FileSaver from "file-saver";
-import * as XLSX from "xlsx";
-import { file } from '@babel/types';
+import { listPage, upload, download } from '@/apis/expenditure/own-manpower';
 const { t } = useI18n();
 
 //表格定义
@@ -116,7 +120,6 @@ const columns = computed(() => [
     { prop: "workDate", label: t("thead.workDate"), minWidth: 13 },
     { prop: "workDesc", label: t("thead.workDesc"), minWidth: 20 },
 ]);
-
 const searchLoading = ref(false);
 const findPage = () => {
     searchLoading.value = true;
@@ -142,169 +145,63 @@ onBeforeMount(() => {
     });
 });
 
-//弹框页面相关
-const dialogVisible = ref(false);
-const showMaintenanceDialog = () => {
-    dialogVisible.value = true;
-}
-const uploadMonth = ref('');
-const uploadRef = ref();
-const fileList = ref([]);
-const submitUpload = () => {
-    if (!uploadMonth.value) {
-        ElMessage({ message: '请选择月份', type: 'error', showClose: true });
-        return;
-    }
-    if (fileList.value.length === 0) {
-        ElMessage({ message: '请先选择要上传的文件', type: 'error', showClose: true });
-        return;
-    }
-    uploadRef.value.submit();
-}
-
-function uploadRequest() {
-    let params = new FormData();
-
-    params.append('file',fileList.value[0].raw);
-    console.log(fileList.value[0].raw);
-    upload(uploadMonth.value,params).then(res=>{
-        console.log(res);
-    });
-}
-
-function UploadUrl() {
-    return ""
-}
-
-
-const formRef = ref();
-const form = reactive({
-    uid: '',
-    bizTypeCode: '',
-    bizType: '',
-    relatedDept: '',
-    parentCode: '',
-    levelID: 1,
-});
-
-
-
-
-
-
-const validateBizTypeCode = (rule, value, callback) => {
-    let valueString = value.toString();
-    if (valueString === '') {
-        callback(new Error(t("form.bizTypeCodeRequired")));
-    } else {
-        if (form.levelID === 1 && valueString.length !== 2) {
-            callback(new Error(t("form.bizTypeCode1LengthError")));
-        } else if (form.levelID === 2 && valueString.length !== 6) {
-            callback(new Error(t("form.bizTypeCode2LengthError")));
-        } else if (form.levelID === 2 && !valueString.startsWith(form.parentCode)) {
-            console.log(valueString, form.parentCode);
-            callback(new Error(t("form.bizTypeCode2TypoError")));
-        } else {
-            if (isEdit && value === oldBizTypeCode.value) callback();
-            checkBizTypeCode(valueString).then((res) => {
-                if (res.data) {
-                    callback();
-                } else {
-                    callback(new Error(t("form.bizTypeCodeRepeatedError")));
-                }
-            })
-        }
-    }
-};
-
-const rules = computed(() => {
-    return {
-        bizTypeCode: [{ validator: validateBizTypeCode, trigger: ['blur'] }],
-        bizType: [{ required: true, message: t('form.bizTypeRequired'), trigger: ['blur', 'change'] }],
-    }
-});
-const bizType1Options = ref([]);
-getBizType1().then((res) => {
-    bizType1Options.value = res.data;
-});
-
-function refreshLevelID() {
-    if (form.parentCode === '' || form.parentCode === null || form.parentCode === 0) {
-        form.levelID = 1;
-    } else {
-        form.levelID = 2;
-    }
-}
 const deptOptions = ref([]);
 getDepartments().then((res) => {
     deptOptions.value = res.data;
 });
 
 
-const oldBizTypeCode = ref('');
+//弹框页面相关
+const dialogVisible = ref(false);
+const showDialog = () => { dialogVisible.value = true; }
+const closeDialog = () => { dialogVisible.value = false; }
 
-
-function handleEmpty() {
-    let initForm = {
-        uid: '',
-        bizTypeCode: '',
-        bizType: '',
-        relatedDept: '',
-        parentCode: '',
-        levelID: 1,
-    };
-    Object.assign(form, initForm);
-}
-
-function closeDialog() {
-    dialogVisible.value = false;
-}
-
-const formLoading = ref(false);
-
-
-function handleSubmit(formRef) {
-    formRef.validate((valid) => {
-        if (valid) {
-            formLoading.value = true;
-            if (!isEdit) { form.uid = ''; }
-            submitPage(form).then(() => {
-                findPage();
-                closeDialog();
-                handleEmpty();
-                ElMessage({ message: t('tips.success'), type: "success" });
-            }).catch().finally(formLoading.value = false);
-        } else {
-            ElMessage({ message: t('tips.validateFailed'), type: "error" });
-            return false;
-        }
-    });
-}
-
-const exportExcel = () => {
-    /* 从表生成工作簿对象 */
-    var wb = XLSX.utils.table_to_book(document.querySelector("#data-table"));
-    /* 获取二进制字符串作为输出 */
-    var wbout = XLSX.write(wb, {
-        bookType: "xlsx",
-        bookSST: true,
-        type: "array"
-    });
-    try {
-        FileSaver.saveAs(
-            //Blob 对象表示一个不可变、原始数据的类文件对象。
-            //Blob 表示的不一定是JavaScript原生格式的数据。
-            //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-            //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-            new Blob([wbout], { type: "application/octet-stream" }),
-            //设置导出文件名称
-            Date.parse(new Date()) + ".xlsx"
-        );
-    } catch (e) {
-        if (typeof console !== "undefined") console.log(e, wbout);
+const uploadMonth = ref('');
+const uploadRef = ref();
+const uploading = ref(false);
+const fileList = ref([]);
+const submitUpload = () => {
+    if (!uploadMonth.value) {
+        ElMessage({ message: t('tips.monthRequired'), type: 'error', showClose: true });
+        return;
     }
-    return wbout;
+    if (fileList.value.length === 0) {
+        ElMessage({ message: t('tips.fileRequired'), type: 'error', showClose: true });
+        return;
+    }
+    ElMessageBox
+    .confirm(t('tips.uploadWarning'),t('tips.warning'),{confirmButtonText:t('action.confirm'),cancelButtonText:t('action.cancel'),type:'warning'})
+    .then(()=>{uploadRef.value.submit();}).catch();
 }
+function uploadRequest() {
+    let params = new FormData();
+    params.append('file', fileList.value[0].raw);
+    uploading.value=true;
+    upload(uploadMonth.value, params).then(res => {
+        ElMessage({type:"success",message:t('tips.successImport')+res.data});
+    }).finally(()=>{
+        uploading.value=false;
+    });
+}
+
+const downloadMonth = ref('');
+const downloading = ref(false);
+const doDownload = () => {
+    downloading.value = true;
+    download(downloadMonth.value).then((res) => {
+        const link = document.createElement('a');
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' });
+        link.style.display = "none";
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", downloadMonth.value + ".xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }).catch().finally(() => {
+        downloading.value = false;
+    });
+}
+
 //自适应高度
 const tableHeight = ref();
 onMounted(() => {
