@@ -106,18 +106,16 @@ const { t } = useI18n();
 const tableRef = ref();
 const columns = computed(() => [
     { prop: "uid", label: t("thead.uid"), minWidth: 8 },
-    { prop: "monthId", label: t("thead.monthId"), minWidth: 10 },
-    { prop: "supplier", label: t("thead.supplier"), minWidth: 10 },
+    { prop: "supplier", label: t("thead.supplier"), minWidth: 12 },
     { prop: "useDept", label: t("thead.useDept"), minWidth: 15 },
     { prop: "costDept", label: t("thead.costDept"), minWidth: 15 },
-    { prop: "productName", label: t("thead.productName"), minWidth: 15 },
-    { prop: "projectName", label: t("thead.projectName"), minWidth: 30 },
     { prop: "projectCode", label: t("thead.projectCode"), minWidth: 15 },
-    { prop: "outsiderName", label: t("thead.outsiderName"), minWidth: 12 },
-    { prop: "level", label: t("thead.level"), minWidth: 13 },
-    { prop: "scheduledWorkday", label: t("thead.scheduledWorkday"), minWidth: 8 },
-    { prop: "actualWorkday", label: t("thead.actualWorkday"), minWidth: 8 },
-    { prop: "payAmount", label: t("thead.payAmount"), minWidth: 8 },
+    { prop: "projectName", label: t("thead.projectName"), minWidth: 30 },
+    { prop: "outsiderName", label: t("thead.outsiderName"), minWidth: 10 },
+    { prop: "level", label: t("thead.level"), minWidth: 10 },
+    { prop: "scheduledWorkday", label: t("thead.scheduledWorkday"), minWidth: 12 },
+    { prop: "actualWorkday", label: t("thead.actualWorkday"), minWidth: 12 },
+    { prop: "payAmount", label: t("thead.payAmount"), minWidth: 12 },
 ]);
 const searchLoading = ref(false);
 const findPage = () => {

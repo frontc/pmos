@@ -22,10 +22,11 @@ export default defineConfig({
       '@': resolve(__dirname, 'src'),
     }
   },
-  define:{
-    'process.env':{},
+  define: {
+    'process.env': {},
   },
-  server:{
-    host:'0.0.0.0',
+  server: {
+    host: '0.0.0.0',
+    hmr: true,
   },
 })

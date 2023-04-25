@@ -28,7 +28,7 @@
       <el-button v-if="showBatchDelete" type="danger" :disabled="selections.length === 0" @click="handleBatchDelete()">{{
         t('action.batchDelete') }}</el-button>
       <el-pagination v-if="showPagination" class="cm-table__pagination" v-model:currentPage="pageRequest.pageNum"
-        v-model:page-size="pageRequest.pageSize" :total="data.totalSize || 0" :page-sizes="[15, 30, 50, 100, 200]"
+        v-model:page-size="pageRequest.pageSize" :total="data.totalSize || 0" :page-sizes="[10, 20, 50, 100]"
         layout="total, prev, pager, next, sizes, jumper" @size-change="handleSizeChange"
         @current-change="handlePageChange"></el-pagination>
     </div>

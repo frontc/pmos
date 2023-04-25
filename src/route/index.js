@@ -39,15 +39,15 @@ const routes = [
                 children:[
                     {
                         path:"own-manpower",
-                        name:"OwnManpower",
+                        name:"OwnManPower",
                         meta: { requireAuth: true },
-                        component: () => import('@/views/expenditure/OwnManpower.vue')
+                        component: () => import('@/views/expenditure/OwnManPower.vue')
                     },
                     {
                         path:"outsourced-manpower",
-                        name:"OutsourcedManpower",
+                        name:"OutsourcedManPower",
                         meta: { requireAuth: true },
-                        component: () => import('@/views/expenditure/OutsourcedManpower.vue')
+                        component: () => import('@/views/expenditure/OutsourcedManPower.vue')
                     },
                 ]
             },
