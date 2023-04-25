@@ -89,7 +89,8 @@
                         </el-select>
                         <el-button type="primary" class="margin_10" slot="trigger">{{ t('form.selectFile') }}</el-button>
                     </el-upload>
-                    <el-button type="primary" @click="submitUpload" class="margin_10" slot="default" :loading="uploading">{{ t('form.upload')
+                    <el-button type="primary" @click="submitUpload" class="margin_10" slot="default" :loading="uploading">{{
+                        t('form.upload')
                     }}</el-button>
                 </el-row>
             </div>
@@ -170,23 +171,27 @@ const submitUpload = () => {
         return;
     }
     ElMessageBox
-    .confirm(t('tips.uploadWarning'),t('tips.warning'),{confirmButtonText:t('action.confirm'),cancelButtonText:t('action.cancel'),type:'warning'})
-    .then(()=>{uploadRef.value.submit();}).catch();
+        .confirm(t('tips.uploadWarning'), t('tips.warning'), { confirmButtonText: t('action.confirm'), cancelButtonText: t('action.cancel'), type: 'warning' })
+        .then(() => { uploadRef.value.submit(); }).catch();
 }
 function uploadRequest() {
     let params = new FormData();
     params.append('file', fileList.value[0].raw);
-    uploading.value=true;
+    uploading.value = true;
     upload(uploadMonth.value, params).then(res => {
-        ElMessage({type:"success",message:t('tips.successImport')+res.data});
-    }).finally(()=>{
-        uploading.value=false;
+        ElMessage({ type: "success", message: t('tips.successImport') + res.data });
+    }).finally(() => {
+        uploading.value = false;
     });
 }
 
 const downloadMonth = ref('');
 const downloading = ref(false);
 const doDownload = () => {
+    if (!downloadMonth.value) {
+        ElMessage({ message: t('tips.monthRequired'), type: 'error' });
+        return;
+    }
     downloading.value = true;
     download(downloadMonth.value).then((res) => {
         const link = document.createElement('a');
