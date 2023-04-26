@@ -73,7 +73,7 @@
 </template>
 <script setup>
 import { listPage, getBizType1, submitPage, remove, checkBizTypeCode, download } from '@/apis/basic/biz-list';
-import { getDepartments } from '@/apis/basic/departments';
+import { getDepartments } from '@/apis/basic/base';
 // import * as FileSaver from "file-saver";
 // import * as XLSX from "xlsx";
 const { t } = useI18n();
@@ -83,9 +83,9 @@ const tableRef = ref();
 const columns = computed(() => [
     { prop: "uid", label: t("thead.uid"), minWidth: 15 },
     { prop: "bizTypeCode", label: t("thead.bizTypeCode"), minWidth: 40 },
-    { prop: "bizType", label: t("thead.bizType"), minWidth: 100 },
+    { prop: "bizType", label: t("thead.bizType"), minWidth: 50 },
     { prop: "relatedDept", label: t("thead.relatedDept"), minWidth: 50 },
-    { prop: "parentCode", label: t("thead.parentCode"), minWidth: 15 },
+    { prop: "parentCode", label: t("thead.parentCode"), minWidth: 20 },
     { prop: "levelID", label: t("thead.levelID"), minWidth: 15 },
 ]);
 

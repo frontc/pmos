@@ -12,11 +12,28 @@
 <script setup>
 import PageHeader from './components/PageHeader.vue';
 import PageSidebar from './components/PageSiderbar.vue';
+import { getProjectTypes,getDepartments,getMonths } from '@/apis/basic/base';
+
 const route = useRoute();
+const store = useStore();
 const showLeft = computed(() => {
     const rounteName = route.name;
     return !['Login', 'NotFound'].includes(rounteName) && !/^Personal/.test(rounteName);
 });
+
+//初始化项目类型
+getProjectTypes().then(res=>{
+    store.commit('setProjectTypes',res.data);
+})
+//初始化部门列表
+getDepartments().then(res=>{
+    store.commit('setDepartments',res.data);
+})
+//初始化月份列表
+getMonths().then(res=>{
+    store.commit('setMonths',res.data);
+})
+
 </script>
 <style lang="scss">
 .page-container {

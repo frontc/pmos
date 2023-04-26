@@ -96,8 +96,7 @@
     </el-dialog>
 </template>
 <script setup>
-import { getDepartments } from '@/apis/basic/departments';
-import { getMonths } from '@/apis/basic/base';
+import { getMonths,getDepartments } from '@/apis/basic/base';
 import { defaultDate } from '@/toolkit';
 import { listPage, upload, download, getSuppliers } from '@/apis/expenditure/outsource-manpower';
 const { t } = useI18n();

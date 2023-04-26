@@ -67,7 +67,7 @@
 <script setup>
 import { listPage, submitPage, remove,download } from '@/apis/basic/project-list';
 import { getBizTypeTree, getBizType1, getBizTypeSons } from '@/apis/basic/biz-list';
-import { getDepartments } from '@/apis/basic/departments';
+import { getDepartments } from '@/apis/basic/base';
 
 const { t } = useI18n();
 const tableRef = ref();

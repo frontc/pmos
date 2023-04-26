@@ -6,6 +6,9 @@ export default createStore({
         token: '',
         username:'',
         isLogin:false,
+        projectTypes:[],
+        departments:[],
+        months:[],
     },
     mutations: {
         setToken(state,token){
@@ -23,7 +26,16 @@ export default createStore({
             state.token='';
             state.username='';
             state.isLogin=false;
-        }
+        },
+        setProjectTypes(state,projectTypes){
+            state.projectTypes=projectTypes;
+        },
+        setDepartments(state,departments){
+            state.departments=departments;
+        },
+        setMonths(state,months){
+            state.months=months;
+        },
     },
     plugins:[persistedState()],
 })

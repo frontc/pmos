@@ -1,13 +1,12 @@
 <template>
   <div v-loading="loading" class="cm-table">
     <!--表格栏-->
-    <el-table  :data="data.content" class="cm-table__tb" v-bind="$attrs" @selection-change="selectionChange" >
+    <el-table :data="data.content" class="cm-table__tb" v-bind="$attrs" @selection-change="selectionChange">
       <el-table-column v-for="column in columns" :key="column.prop" v-bind="column" :show-overflow-tooltip=true>
         <template v-if="$slots[`${column.prop}Slot`]" #default="scope">
           <slot :name="`${column.prop}Slot`" :scope="scope" />
         </template>
       </el-table-column>
-
       <el-table-column v-if="showOperation" fixed="right" :label="t('action.operation')" :width="oprWidth">
         <template #default="{ row }">
           <template v-for="(opr, i) in operations" :key="i">
@@ -64,7 +63,7 @@ const props = defineProps({
   },
   oprWidth: {
     type: Number,
-    default: 185
+    default: 100
   },
   showBatchDelete: {
     type: Boolean,
@@ -81,6 +80,9 @@ const pageRequest = reactive({
   pageSize: 10,
 })
 const data = ref({});
+
+
+
 // 分页查询
 function findPage() {
   if (!props.getPage) {
@@ -176,12 +178,14 @@ defineExpose({
 })
 
 
+
 </script>
 <style lang="scss" scoped>
 .cm-table__tb {
   border: 1px solid #eee;
   border-bottom: none;
   min-width: 100%;
+
 }
 
 .cm-table__toolbar {
