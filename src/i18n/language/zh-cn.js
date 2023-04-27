@@ -132,5 +132,6 @@ export default{
     dialog:{
         export:"数据导出",
         import:"数据导入",
+        manhourInternalImportTips:"1.导入时将清除当前月数据；2.部门名称将去除公司名；3.公共项目将用任务名覆盖项目名；4.新增项目将自动在项目映射中新增。"
     },
 };

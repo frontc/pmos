@@ -73,9 +73,10 @@
         <el-card>
             <template #header>
                 <div class="card-header">
-                    <el-icon size="large">
-                        <Upload />
-                    </el-icon><span class="card-header-title">{{ t('dialog.import') }}</span>
+                    <el-icon size="large"><Upload /></el-icon>
+                    <el-tooltip :content="t('dialog.manhourInternalImportTips')">
+                        <span class="card-header-title">{{ t('dialog.import') }}</span>
+                    </el-tooltip>            
                 </div>
             </template>
             <div>
@@ -95,12 +96,10 @@
                 </el-row>
             </div>
         </el-card>
-
-
     </el-dialog>
 </template>
 <script setup>
-import { getMonths,getDepartments } from '@/apis/basic/base';
+import { getMonths, getDepartments } from '@/apis/basic/base';
 import { defaultDate } from '@/toolkit';
 import { listPage, upload, download } from '@/apis/expenditure/own-manpower';
 const { t } = useI18n();
