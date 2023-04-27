@@ -70,6 +70,7 @@ export default{
         submit:"Submit",
         empty:"Empty",
         export:"Export",
+        import:"Import",
     },
     tips:{
         deleteConfirm:"Delete Confirm",

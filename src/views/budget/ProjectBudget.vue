@@ -161,10 +161,9 @@
     </el-dialog>
 </template>
 <script setup>
-import { listPage, submitPage } from '@/apis/budget/project-budget';
-import { remove, download } from '@/apis/basic/project-list';
+import { listPage, submitPage, remove, download } from '@/apis/budget/project-budget';
 import { getProjectStatus } from '@/apis/basic/base';
-import { isNumber,toFloat } from '@/toolkit';
+import { isNumber, toFloat } from '@/toolkit';
 const { t } = useI18n();
 const store = useStore();
 //过滤器
@@ -187,7 +186,7 @@ const columns = computed(() => [
     { prop: "uid", label: t("thead.uid"), minWidth: 5 },
     { prop: "dept", label: t("thead.dept"), minWidth: 10 },
     { prop: "projectCode", label: t("thead.projectCode"), minWidth: 10 },
-    { prop: "projectName", label: t("thead.projectName"), minWidth: 10 },
+    { prop: "projectName", label: t("thead.projectName"), minWidth: 15 },
     { prop: "projectType", label: t("thead.projectType"), minWidth: 10 },
     { prop: "projectManager", label: t("thead.projectManager"), minWidth: 10 },
     { prop: "totalBudget", label: t("thead.totalBudget"), minWidth: 10 },
@@ -202,7 +201,7 @@ const columns = computed(() => [
     { prop: "scheduledStartDate", label: t("thead.scheduledStartDate"), minWidth: 10 },
     { prop: "scheduledEndDate", label: t("thead.scheduledEndDate"), minWidth: 10 },
     { prop: "projectMonth", label: t("thead.projectMonth"), minWidth: 10 },
-    { prop: "projectStatus", label: t("thead.projectStatus"), minWidth: 5 },
+    { prop: "projectStatus", label: t("thead.projectStatus"), minWidth: 10 },
 ]);
 const findPage = () => {
     tableRef.value.reload();
@@ -219,13 +218,13 @@ const form = reactive({
     projectName: '',
     projectType: '',
     projectManager: '',
-    totalBudget: computed(() => { 
-        return toFloat(form.ownManpowerBudget) 
-                         + toFloat(form.outsourcedManpowerBudget)
-                         + toFloat(form.technicalServiceFeeBudget)
-                         + toFloat(form.capexBudget)
-                         + toFloat(form.cloudFeeBudget)
-                         + toFloat(form.otherBudget);
+    totalBudget: computed(() => {
+        return toFloat(form.ownManpowerBudget)
+            + toFloat(form.outsourcedManpowerBudget)
+            + toFloat(form.technicalServiceFeeBudget)
+            + toFloat(form.capexBudget)
+            + toFloat(form.cloudFeeBudget)
+            + toFloat(form.otherBudget);
     }),
     ownManpowerBudget: '',
     outsourcedManpowerBudget: '',
@@ -250,7 +249,8 @@ const validateFloat = (rule, value, callback) => {
 };
 
 const validateBlank = (rule, value, callback) => {
-    if (value.indexOf(' ') == -1) { callback() } else {
+    let valueStr = value.toString();
+    if (valueStr.indexOf(' ') == -1) { callback() } else {
         callback(new Error(t('form.blankError')));
     }
 }
@@ -304,7 +304,24 @@ function handleAdd() {
 function handleEdit(row) {
     dialogVisible.value = true;
     isEdit.value = true;
-    Object.assign(form, row);
+    form.uid = row.uid;
+    form.dept = row.dept;
+    form.projectCode = row.projectCode;
+    form.projectName = row.projectName;
+    form.projectType = row.projectType;
+    form.projectManager = row.projectManager;
+    form.ownManpowerBudget = row.ownManpowerBudget;
+    form.outsourcedManpowerBudget = row.outsourcedManpowerBudget;
+    form.technicalServiceFeeBudget = row.technicalServiceFeeBudget;
+    form.capexBudget = row.capexBudget;
+    form.cloudFeeBudget = row.cloudFeeBudget;
+    form.otherBudget = row.otherBudget;
+    form.manhourInternalTotal = row.manhourInternalTotal;
+    form.manhourExternalTotal = row.manhourExternalTotal;
+    form.scheduledStartDate = row.scheduledStartDate;
+    form.scheduledEndDate = row.scheduledEndDate;
+    form.projectMonth = row.projectMonth;
+    form.projectStatus = row.projectStatus;
 }
 
 function handleEmpty() {
@@ -315,7 +332,7 @@ function handleEmpty() {
         projectName: '',
         projectType: '',
         projectManager: '',
-        totalBudget: '',
+        // totalBudget: '',
         ownManpowerBudget: '',
         outsourcedManpowerBudget: '',
         technicalServiceFeeBudget: '',
@@ -334,7 +351,6 @@ function handleEmpty() {
 
 function closeDialog() {
     dialogVisible.value = false;
-    console.log(form);
 }
 
 
@@ -357,8 +373,9 @@ function handleSubmit(formRef) {
 }
 
 function handleDelete(ids) {
-    remove(ids);
-    findPage();
+    remove(ids).then(() => {
+        findPage();
+    });
 }
 
 const downloading = ref(false);
@@ -369,7 +386,7 @@ const exportExcel = () => {
         let blob = new Blob([res], { type: 'application/vnd.ms-excel' });
         link.style.display = "none";
         link.href = URL.createObjectURL(blob);
-        link.setAttribute("download", "项目映射表.xlsx");
+        link.setAttribute("download", "项目预算表.xlsx");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -377,32 +394,6 @@ const exportExcel = () => {
         downloading.value = false;
     });
 }
-
-// const exportExcel = () => {
-//     /* 从表生成工作簿对象 */
-//     var wb = XLSX.utils.table_to_book(document.querySelector("#data-table"));
-//     /* 获取二进制字符串作为输出 */
-//     var wbout = XLSX.write(wb, {
-//         bookType: "xlsx",
-//         bookSST: true,
-//         type: "array"
-//     });
-//     try {
-//         FileSaver.saveAs(
-//             //Blob 对象表示一个不可变、原始数据的类文件对象。
-//             //Blob 表示的不一定是JavaScript原生格式的数据。
-//             //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-//             //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-//             new Blob([wbout], { type: "application/octet-stream" }),
-//             //设置导出文件名称
-//             Date.parse(new Date()) + ".xlsx"
-//         );
-//     } catch (e) {
-//         if (typeof console !== "undefined") console.log(e, wbout);
-//     }
-//     return wbout;
-// }
-
 
 const tableHeight = ref();
 onMounted(() => {

@@ -16,3 +16,18 @@ export const submitPage = (data)=>{
     });
 }
 
+export const remove = (data)=>{
+    return request({
+        url:"/projectBudget/delete",
+        method:"post",
+        data
+    });
+}
+
+export const download = ()=>{
+    return request({
+        url:"/projectBudget/download",
+        method:"post",
+        responseType:"blob",
+    })
+}

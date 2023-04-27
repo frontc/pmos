@@ -70,6 +70,7 @@ export default{
         submit:"提交",
         empty:"清空",
         export:"导出",
+        import:"导入",
     },
     tips:{
         deleteConfirm:"确认删除",

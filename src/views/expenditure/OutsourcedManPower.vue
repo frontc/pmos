@@ -179,6 +179,7 @@ function uploadRequest() {
     uploading.value=true;
     upload(uploadMonth.value, params).then(res => {
         ElMessage({type:"success",message:t('tips.successImport')+res.data});
+        findPage();
     }).finally(()=>{
         uploading.value=false;
     });
