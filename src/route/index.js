@@ -91,6 +91,12 @@ const routes = [
                         meta: { requireAuth: true },
                         component: () => import('@/views/basic/BussinessList.vue')
                     },
+                    {
+                        path:"data-work",
+                        name:"DataWork",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/basic/DataWork.vue')
+                    },
                 ]
             },
         ],

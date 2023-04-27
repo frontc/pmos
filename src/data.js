@@ -48,6 +48,11 @@ export const menuTreeData =[
                 path:"/basic/project-list",
                 icon:"Tickets",
             },
+            {
+                name:'DataWork',
+                path:"/basic/data-work",
+                icon:"Tools",
+            },
         ]
     },
 ]

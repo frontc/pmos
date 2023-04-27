@@ -57,6 +57,7 @@ export default{
         Basic:"基础数据",
         BussinessList:"业务类别",
         ProjectList:"项目清单",
+        DataWork:"数据作业",
     },
     action:{
         operation:"操作",
@@ -118,7 +119,7 @@ export default{
         totalBudget:"总预算",
         ownManpowerBudget:"自有人力",
         outsourcedManpowerBudget:"外协人力",
-        technicalServiceFeeBudget:"其他技术服务费",
+        technicalServiceFeeBudget:"其他技服",
         capexBudget:"CAPEX",
         cloudFeeBudget:"云资源",
         otherBudget:"其他预算",
@@ -134,4 +135,6 @@ export default{
         import:"数据导入",
         manhourInternalImportTips:"1.导入时将清除当前月数据；2.部门名称将去除公司名；3.公共项目将用任务名覆盖项目名；4.新增项目将自动在项目映射中新增。"
     },
+    dataSummary:"数据汇总",
+    projectSummay:"项目汇总",
 };

@@ -67,9 +67,9 @@
 <script setup>
 import { listPage, submitPage, remove,download } from '@/apis/basic/project-list';
 import { getBizTypeTree, getBizType1, getBizTypeSons } from '@/apis/basic/biz-list';
-import { getDepartments } from '@/apis/basic/base';
-
+const store = useStore();
 const { t } = useI18n();
+
 const tableRef = ref();
 const filters = reactive({
     projectName: '',
@@ -143,10 +143,8 @@ function refreshBizType2(value) {
         })
     }
 }
-const deptOptions = ref([]);
-getDepartments().then((res) => {
-    deptOptions.value = res.data;
-});
+const deptOptions = computed(() => { return store.state.departments });
+
 
 function handleAdd() {
     dialogVisible.value = true;

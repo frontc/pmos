@@ -41,7 +41,7 @@
         <!--表格区-->
         <cm-table id="data-table" ref="tableRef" :get-page="listPage" :filters="filters" :columns="columns"
             :showOperation="true" :showBatchDelete="false" @handleEdit="handleEdit" @handleDelete="handleDelete"
-            :max-height="tableHeight">
+            :max-height="tableHeight" :oprWidth="100">
         </cm-table>
     </div>
     <!--新增/编辑弹框-->
@@ -112,7 +112,7 @@
                         <el-input v-model="form.outsourcedManpowerBudget"></el-input>
                     </el-form-item></el-col>
                 <el-col :span="8"> <el-form-item :label="t('thead.technicalServiceFeeBudget')"
-                        prop="technicalServiceFeeBudget" label-width="50%">
+                        prop="technicalServiceFeeBudget" >
                         <el-input v-model="form.technicalServiceFeeBudget"></el-input>
                     </el-form-item></el-col>
             </el-row>
@@ -183,25 +183,25 @@ getProjectStatus().then(res => {
 //表格
 const tableRef = ref();
 const columns = computed(() => [
-    { prop: "uid", label: t("thead.uid"), minWidth: 5 },
-    { prop: "dept", label: t("thead.dept"), minWidth: 10 },
-    { prop: "projectCode", label: t("thead.projectCode"), minWidth: 10 },
-    { prop: "projectName", label: t("thead.projectName"), minWidth: 15 },
-    { prop: "projectType", label: t("thead.projectType"), minWidth: 10 },
-    { prop: "projectManager", label: t("thead.projectManager"), minWidth: 10 },
-    { prop: "totalBudget", label: t("thead.totalBudget"), minWidth: 10 },
-    { prop: "ownManpowerBudget", label: t("thead.ownManpowerBudget"), minWidth: 10 },
-    { prop: "outsourcedManpowerBudget", label: t("thead.outsourcedManpowerBudget"), minWidth: 10 },
-    { prop: "technicalServiceFeeBudget", label: t("thead.technicalServiceFeeBudget"), minWidth: 12 },
-    { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 10 },
-    { prop: "cloudFeeBudget", label: t("thead.cloudFeeBudget"), minWidth: 10 },
-    { prop: "otherBudget", label: t("thead.otherBudget"), minWidth: 10 },
-    { prop: "manhourInternalTotal", label: t("thead.manhourInternalTotal"), minWidth: 10 },
-    { prop: "manhourExternalTotal", label: t("thead.manhourExternalTotal"), minWidth: 10 },
-    { prop: "scheduledStartDate", label: t("thead.scheduledStartDate"), minWidth: 10 },
+    { prop: "uid", label: t("thead.uid"), minWidth: 4 },
+    { prop: "dept", label: t("thead.dept"), minWidth: 9 },
+    { prop: "projectCode", label: t("thead.projectCode"), minWidth: 11 },
+    { prop: "projectName", label: t("thead.projectName"), minWidth: 18 },
+    // { prop: "projectType", label: t("thead.projectType"), minWidth: 10 },
+    { prop: "projectManager", label: t("thead.projectManager"), minWidth: 8 },
+    { prop: "totalBudget", label: t("thead.totalBudget"), minWidth: 8 },
+    { prop: "ownManpowerBudget", label: t("thead.ownManpowerBudget"), minWidth: 8 },
+    { prop: "outsourcedManpowerBudget", label: t("thead.outsourcedManpowerBudget"), minWidth: 8 },
+    { prop: "technicalServiceFeeBudget", label: t("thead.technicalServiceFeeBudget"), minWidth: 8 },
+    { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 7 },
+    { prop: "cloudFeeBudget", label: t("thead.cloudFeeBudget"), minWidth: 7 },
+    { prop: "otherBudget", label: t("thead.otherBudget"), minWidth: 8 },
+    // { prop: "manhourInternalTotal", label: t("thead.manhourInternalTotal"), minWidth: 10 },
+    // { prop: "manhourExternalTotal", label: t("thead.manhourExternalTotal"), minWidth: 10 },
+    // { prop: "scheduledStartDate", label: t("thead.scheduledStartDate"), minWidth: 10 },
     { prop: "scheduledEndDate", label: t("thead.scheduledEndDate"), minWidth: 10 },
-    { prop: "projectMonth", label: t("thead.projectMonth"), minWidth: 10 },
-    { prop: "projectStatus", label: t("thead.projectStatus"), minWidth: 10 },
+    // { prop: "projectMonth", label: t("thead.projectMonth"), minWidth: 10 },
+    // { prop: "projectStatus", label: t("thead.projectStatus"), minWidth: 10 },
 ]);
 const findPage = () => {
     tableRef.value.reload();

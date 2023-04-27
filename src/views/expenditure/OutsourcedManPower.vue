@@ -96,10 +96,10 @@
     </el-dialog>
 </template>
 <script setup>
-import { getMonths,getDepartments } from '@/apis/basic/base';
 import { defaultDate } from '@/toolkit';
 import { listPage, upload, download, getSuppliers } from '@/apis/expenditure/outsource-manpower';
 const { t } = useI18n();
+const store = useStore();
 
 //表格定义
 const tableRef = ref();
@@ -132,19 +132,12 @@ const filters = reactive({
     outsider: '',
 });
 
-const monthOptions = ref([]);
+const monthOptions = computed(() => { return store.state.months });
 onBeforeMount(() => {
-    getMonths().then((res) => {
-        monthOptions.value = res.data;
-        filters.month = res.data.indexOf(defaultDate()) >= 0 ? defaultDate() : res.data[0];//初始化月份下拉框为最近的一个月
-        findPage();
-    });
+    filters.month = monthOptions.value.indexOf(defaultDate()) >= 0 ? defaultDate() : monthOptions.value[0];
 });
 
-const deptOptions = ref([]);
-getDepartments().then((res) => {
-    deptOptions.value = res.data;
-});
+const deptOptions = computed(() => { return store.state.departments });
 
 const supplierOptions = ref([]);
 getSuppliers().then((res)=>{

@@ -57,6 +57,7 @@ export default{
         Basic:"Basic Data",
         BussinessList:"Bussiness Category",
         ProjectList:"Project List",
+        DataWork:"Data Work",
     },    
     action:{
         operation:"Operation",

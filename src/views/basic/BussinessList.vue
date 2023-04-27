@@ -73,9 +73,7 @@
 </template>
 <script setup>
 import { listPage, getBizType1, submitPage, remove, checkBizTypeCode, download } from '@/apis/basic/biz-list';
-import { getDepartments } from '@/apis/basic/base';
-// import * as FileSaver from "file-saver";
-// import * as XLSX from "xlsx";
+const store = useStore();
 const { t } = useI18n();
 
 //表格定义
@@ -155,10 +153,7 @@ function refreshLevelID() {
         form.levelID = 2;
     }
 }
-const deptOptions = ref([]);
-getDepartments().then((res) => {
-    deptOptions.value = res.data;
-});
+const deptOptions = computed(() => { return store.state.departments });
 
 function handleAdd() {
     dialogVisible.value = true;
