@@ -44,6 +44,7 @@ export default{
         required:"此项不可为空",
         floatRequired:"必须为数字",
         blankError:"不可包含空格",
+        target:"目标",
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",
@@ -72,6 +73,7 @@ export default{
         empty:"清空",
         export:"导出",
         import:"导入",
+        summary:"汇总",
     },
     tips:{
         deleteConfirm:"确认删除",
@@ -83,6 +85,7 @@ export default{
         uploadWarning:"上传将清除现有该月数据，建议先导出备份，确认导入?",
         warning:"警告",
         successImport:"成功导入数据：",
+        successGenerate:"成功生成数据："
     },
     thead:{
         uid:"ID",
