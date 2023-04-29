@@ -12,7 +12,7 @@
 <script setup>
 import PageHeader from './components/PageHeader.vue';
 import PageSidebar from './components/PageSiderbar.vue';
-import { getProjectTypes,getDepartments,getMonths } from '@/apis/basic/base';
+import { getProjectTypes,getDepartments,getMonths,getProjectStatus } from '@/apis/basic/base';
 
 const route = useRoute();
 const store = useStore();
@@ -32,6 +32,10 @@ getDepartments().then(res=>{
 //初始化月份列表
 getMonths().then(res=>{
     store.commit('setMonths',res.data);
+})
+//初始化项目状态
+getProjectStatus().then(res=>{
+    store.commit('setProjectStatus',res.data);
 })
 
 </script>

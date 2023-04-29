@@ -1,9 +1,17 @@
 import request from '@/request';
 
-export const startCalcSummary = (data)=>{
+export const generateDataSummay = (data)=>{
     return request({
-        url:'/work/generateSummary?month='+data.dataSummaryMonth+'&target='+data.dataSummaryTarget,
+        url:'/work/generateDataSummary?month='+data.dataSummaryMonth+'&target='+data.dataSummaryTarget,
         method:'get'
+    });
+}
+
+export const generateProjectSummay = (data)=>{
+    return request({
+        url:'/work/generateProjectSummary',
+        method:'post',
+        data
     });
 }
 

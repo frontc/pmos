@@ -162,7 +162,6 @@
 </template>
 <script setup>
 import { listPage, submitPage, remove, download } from '@/apis/budget/project-budget';
-import { getProjectStatus } from '@/apis/basic/base';
 import { isNumber, toFloat } from '@/toolkit';
 const { t } = useI18n();
 const store = useStore();
@@ -176,10 +175,7 @@ const filters = reactive({
 const projectTypeOptions = computed(() => { return store.state.projectTypes; });
 const deptOptions = computed(() => { return store.state.departments; });
 const monthOptions = computed(() => { return store.state.months; });
-const projectStatusOptions = ref([]);
-getProjectStatus().then(res => {
-    projectStatusOptions.value = res.data;
-});
+const projectStatusOptions = computed(() => { return store.state.projectStatus; });
 //表格
 const tableRef = ref();
 const columns = computed(() => [
@@ -249,6 +245,7 @@ const validateFloat = (rule, value, callback) => {
 };
 
 const validateBlank = (rule, value, callback) => {
+    if(!value) callback();
     let valueStr = value.toString();
     if (valueStr.indexOf(' ') == -1) { callback() } else {
         callback(new Error(t('form.blankError')));

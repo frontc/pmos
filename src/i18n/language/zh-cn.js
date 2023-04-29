@@ -45,6 +45,7 @@ export default{
         floatRequired:"必须为数字",
         blankError:"不可包含空格",
         target:"目标",
+        all:"---全部---",
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",

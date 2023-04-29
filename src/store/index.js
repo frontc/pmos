@@ -9,6 +9,7 @@ export default createStore({
         projectTypes:[],
         departments:[],
         months:[],
+        projectStatus:[],
     },
     mutations: {
         setToken(state,token){
@@ -36,6 +37,9 @@ export default createStore({
         setMonths(state,months){
             state.months=months;
         },
+        setProjectStatus(state,projectStatus){
+            state.projectStatus=projectStatus;
+        }
     },
     plugins:[persistedState()],
 })

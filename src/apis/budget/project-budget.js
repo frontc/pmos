@@ -31,3 +31,10 @@ export const download = ()=>{
         responseType:"blob",
     })
 }
+
+export const getProjects = (projectStatus)=>{
+    return request({
+        url:'projectBudget/projects?projectStatus='+projectStatus,
+        method:'get'
+    });
+}
