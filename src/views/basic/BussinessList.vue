@@ -13,13 +13,19 @@
                     </el-select>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="search" type="primary" @click="findPage">{{ t('action.search') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.search')" placement="bottom">
+                        <el-button icon="search" type="primary" @click="findPage" />
+                    </el-tooltip>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="plus" type="primary" @click="handleAdd">{{ t('action.add') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.add')" placement="bottom">
+                        <el-button icon="plus" type="primary" @click="handleAdd" />
+                    </el-tooltip>
                 </el-form-item>
                 <el-form-item class="export">
-                    <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading">{{ t('action.export') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.export')" placement="bottom">
+                        <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading" circle />
+                    </el-tooltip>
                 </el-form-item>
             </el-form>
         </div>

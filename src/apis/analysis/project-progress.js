@@ -7,3 +7,11 @@ export const listPage=(data)=>{
         data
     });
 }
+
+export const download = ()=>{
+    return request({
+        url:"/analysis/projectBudgetProgress/download",
+        method:"post",
+        responseType:"blob",
+    })
+}

@@ -34,7 +34,14 @@
                 </el-form-item>
                 <!--查询按钮-->
                 <el-form-item>
-                    <el-button icon="search" type="primary" @click="findPage">{{ t('action.search') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.search')" placement="bottom">
+                        <el-button icon="search" type="primary" @click="findPage" :loading="loading"></el-button>
+                    </el-tooltip>
+                </el-form-item>
+                <el-form-item class="export">
+                    <el-tooltip effect="dark" :content="t('action.export')" placement="bottom">
+                        <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading" circle/>
+                    </el-tooltip>
                 </el-form-item>
             </el-form>
         </div>
@@ -78,7 +85,7 @@
     </div>
 </template>
 <script setup>
-import { listPage } from '@/apis/analysis/project-progress';
+import { listPage, download } from '@/apis/analysis/project-progress';
 import { fixed, isNumber } from '@/toolkit';
 const store = useStore();
 const { t } = useI18n();
@@ -137,13 +144,13 @@ const columns = computed(() => [
 ]);
 const data = ref({});
 function findPage() {
-    loading.value=true;
+    loading.value = true;
     listPage({ ...pageRequest, ...filters }).then((res) => {
         data.value = {
             content: res.data.records,
             totalSize: res.data.total
         };
-    }).catch().finally(()=>{loading.value=false});
+    }).catch().finally(() => { loading.value = false });
 }
 const progressColor = (progress, budget, actual) => {
     if (progress > 1 || actual > budget) return '#f56c6c'; //红色f56c6c
@@ -170,6 +177,24 @@ function reload() {
     handlePageChange(1);
 }
 reload();
+// 导出EXCEL
+const downloading = ref(false);
+const exportExcel = () => {
+    downloading.value = true;
+    download().then((res) => {
+        const link = document.createElement('a');
+        let blob = new Blob([res], { type: 'application/vnd.ms-excel' });
+        link.style.display = "none";
+        link.href = URL.createObjectURL(blob);
+        link.setAttribute("download", "项目预算执行情况表.xlsx");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }).catch().finally(() => {
+        downloading.value = false;
+    });
+}
+
 </script>
 <style lang="scss" scoped>
 .cm-table__tb {
@@ -200,5 +225,10 @@ reload();
 
 .el-link {
     margin-right: 8px;
+}
+
+.export {
+    float: right;
+    padding-right: 0;
 }
 </style>

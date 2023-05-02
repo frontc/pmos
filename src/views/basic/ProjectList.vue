@@ -15,13 +15,19 @@
                     <el-input v-model="filters.costDept" :placeholder="t('form.costDept')" clearable></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="search" type="primary" @click="findPage">{{ t('action.search') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.search')" placement="bottom">
+                        <el-button icon="search" type="primary" @click="findPage" />
+                    </el-tooltip>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="plus" type="primary" @click="handleAdd">{{ t('action.add') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.add')" placement="bottom">
+                        <el-button icon="plus" type="primary" @click="handleAdd" />
+                    </el-tooltip>
                 </el-form-item>
                 <el-form-item class="export">
-                    <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading">{{ t('action.export') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.export')" placement="bottom">
+                        <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading" circle />
+                    </el-tooltip>
                 </el-form-item>
             </el-form>
         </div>
@@ -205,32 +211,6 @@ const exportExcel = () =>{
         downloading.value = false;
     });
 }
-
-// const exportExcel = () => {
-//     /* 从表生成工作簿对象 */
-//     var wb = XLSX.utils.table_to_book(document.querySelector("#data-table"));
-//     /* 获取二进制字符串作为输出 */
-//     var wbout = XLSX.write(wb, {
-//         bookType: "xlsx",
-//         bookSST: true,
-//         type: "array"
-//     });
-//     try {
-//         FileSaver.saveAs(
-//             //Blob 对象表示一个不可变、原始数据的类文件对象。
-//             //Blob 表示的不一定是JavaScript原生格式的数据。
-//             //File 接口基于Blob，继承了 blob 的功能并将其扩展使其支持用户系统上的文件。
-//             //返回一个新创建的 Blob 对象，其内容由参数中给定的数组串联组成。
-//             new Blob([wbout], { type: "application/octet-stream" }),
-//             //设置导出文件名称
-//             Date.parse(new Date()) + ".xlsx"
-//         );
-//     } catch (e) {
-//         if (typeof console !== "undefined") console.log(e, wbout);
-//     }
-//     return wbout;
-// }
-
 
 const tableHeight = ref();
 onMounted(() => {

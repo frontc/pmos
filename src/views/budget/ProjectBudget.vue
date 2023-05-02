@@ -26,14 +26,19 @@
                     <el-input v-model="filters.projectMonth" :placeholder="t('form.projectMonth')" clearable></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="search" type="primary" @click="findPage">{{ t('action.search') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.search')" placement="bottom">
+                        <el-button icon="search" type="primary" @click="findPage" />
+                    </el-tooltip>
                 </el-form-item>
                 <el-form-item>
-                    <el-button icon="plus" type="primary" @click="handleAdd">{{ t('action.add') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.add')" placement="bottom">
+                        <el-button icon="plus" type="primary" @click="handleAdd" />
+                    </el-tooltip>
                 </el-form-item>
                 <el-form-item class="export">
-                    <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading">{{
-                        t('action.export') }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.export')" placement="bottom">
+                        <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading" circle />
+                    </el-tooltip>
                 </el-form-item>
             </el-form>
 
@@ -112,7 +117,7 @@
                         <el-input v-model="form.outsourcedManpowerBudget"></el-input>
                     </el-form-item></el-col>
                 <el-col :span="8"> <el-form-item :label="t('thead.technicalServiceFeeBudget')"
-                        prop="technicalServiceFeeBudget" >
+                        prop="technicalServiceFeeBudget">
                         <el-input v-model="form.technicalServiceFeeBudget"></el-input>
                     </el-form-item></el-col>
             </el-row>
@@ -245,7 +250,7 @@ const validateFloat = (rule, value, callback) => {
 };
 
 const validateBlank = (rule, value, callback) => {
-    if(!value) callback();
+    if (!value) callback();
     let valueStr = value.toString();
     if (valueStr.indexOf(' ') == -1) { callback() } else {
         callback(new Error(t('form.blankError')));

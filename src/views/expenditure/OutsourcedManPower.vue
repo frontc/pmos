@@ -32,12 +32,15 @@
                 </el-form-item>
                 <!--查询按钮-->
                 <el-form-item>
-                    <el-button icon="search" type="primary" @click="findPage" :loading="searchLoading">{{ t('action.search')
-                    }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.search')" placement="bottom">
+                        <el-button icon="search" type="primary" @click="findPage" :loading="searchLoading" />
+                    </el-tooltip>
                 </el-form-item>
                 <!--进入维护页面-->
                 <el-form-item class="maintenance">
-                    <el-button icon="tools" type="default" @click="showDialog" circle></el-button>
+                    <el-tooltip effect="dark" :content="t('maintenance')" placement="bottom">
+                        <el-button icon="tools" type="default" @click="showDialog" circle />
+                    </el-tooltip>
                 </el-form-item>
             </el-form>
         </div>
@@ -88,7 +91,8 @@
                         </el-select>
                         <el-button type="primary" class="margin_10" slot="trigger">{{ t('form.selectFile') }}</el-button>
                     </el-upload>
-                    <el-button type="primary" @click="submitUpload" class="margin_10" slot="default" :loading="uploading">{{ t('form.upload')
+                    <el-button type="primary" @click="submitUpload" class="margin_10" slot="default" :loading="uploading">{{
+                        t('form.upload')
                     }}</el-button>
                 </el-row>
             </div>
@@ -140,7 +144,7 @@ onBeforeMount(() => {
 const deptOptions = computed(() => { return store.state.departments });
 
 const supplierOptions = ref([]);
-getSuppliers().then((res)=>{
+getSuppliers().then((res) => {
     supplierOptions.value = res.data;
 });
 
@@ -163,25 +167,25 @@ const submitUpload = () => {
         return;
     }
     ElMessageBox
-    .confirm(t('tips.uploadWarning'),t('tips.warning'),{confirmButtonText:t('action.confirm'),cancelButtonText:t('action.cancel'),type:'warning'})
-    .then(()=>{uploadRef.value.submit();}).catch();
+        .confirm(t('tips.uploadWarning'), t('tips.warning'), { confirmButtonText: t('action.confirm'), cancelButtonText: t('action.cancel'), type: 'warning' })
+        .then(() => { uploadRef.value.submit(); }).catch();
 }
 function uploadRequest() {
     let params = new FormData();
     params.append('file', fileList.value[0].raw);
-    uploading.value=true;
+    uploading.value = true;
     upload(uploadMonth.value, params).then(res => {
-        ElMessage({type:"success",message:t('tips.successImport')+res.data});
+        ElMessage({ type: "success", message: t('tips.successImport') + res.data });
         findPage();
-    }).finally(()=>{
-        uploading.value=false;
+    }).finally(() => {
+        uploading.value = false;
     });
 }
 
 const downloadMonth = ref('');
 const downloading = ref(false);
 const doDownload = () => {
-    if(!downloadMonth.value){
+    if (!downloadMonth.value) {
         ElMessage({ message: t('tips.monthRequired'), type: 'error', showClose: true });
         return;
     }

@@ -33,12 +33,15 @@
                 </el-form-item>
                 <!--查询按钮-->
                 <el-form-item>
-                    <el-button icon="search" type="primary" @click="findPage" :loading="searchLoading">{{ t('action.search')
-                    }}</el-button>
+                    <el-tooltip effect="dark" :content="t('action.search')" placement="bottom">
+                        <el-button icon="search" type="primary" @click="findPage" :loading="searchLoading" />
+                    </el-tooltip>
                 </el-form-item>
                 <!--进入维护页面-->
                 <el-form-item class="maintenance">
-                    <el-button icon="tools" type="default" @click="showDialog" circle></el-button>
+                    <el-tooltip effect="dark" :content="t('maintenance')" placement="bottom">
+                        <el-button icon="tools" type="default" @click="showDialog" circle />
+                    </el-tooltip>
                 </el-form-item>
             </el-form>
         </div>
@@ -73,10 +76,12 @@
         <el-card>
             <template #header>
                 <div class="card-header">
-                    <el-icon size="large"><Upload /></el-icon>
+                    <el-icon size="large">
+                        <Upload />
+                    </el-icon>
                     <el-tooltip :content="t('dialog.manhourInternalImportTips')">
                         <span class="card-header-title">{{ t('dialog.import') }}</span>
-                    </el-tooltip>            
+                    </el-tooltip>
                 </div>
             </template>
             <div>
