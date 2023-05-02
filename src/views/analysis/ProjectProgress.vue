@@ -135,17 +135,15 @@ const columns = computed(() => [
     { prop: "projectStatus", label: t("thead.projectStatus"), minWidth: 30, type: 'normal' },
     { prop: "updateDate", label: t("thead.updateDate"), minWidth: 40, type: 'normal' },
 ]);
-
-
-
 const data = ref({});
 function findPage() {
+    loading.value=true;
     listPage({ ...pageRequest, ...filters }).then((res) => {
         data.value = {
             content: res.data.records,
             totalSize: res.data.total
         };
-    })
+    }).catch().finally(()=>{loading.value=false});
 }
 const progressColor = (progress, budget, actual) => {
     if (progress > 1 || actual > budget) return '#f56c6c'; //红色f56c6c

@@ -44,6 +44,10 @@ export default{
         required:"This item should not be Empty",
         floatRequired:"Must be a number",
         blankError:"Should Not Contains Blank",
+        target:"Target",
+        all:"---ALL---",
+        projectStatus:"Project Status",
+        totalProgress:"Total Progress (0-1)",
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
@@ -74,6 +78,7 @@ export default{
         empty:"Empty",
         export:"Export",
         import:"Import",
+        summary:"Summary",
     },
     tips:{
         deleteConfirm:"Delete Confirm",
@@ -85,6 +90,8 @@ export default{
         uploadWarning:"The upload will overwrite the existing data of the month, It is recommended to export the backup first, Please confirm!",
         warning:"Warning",
         successImport:"Success Import Records: ",
+        successGenerate:"Success Generate ："
+
     },
     thead:{
         uid:"ID",
@@ -131,9 +138,25 @@ export default{
         scheduledEndDate:"Scheduled End Date",
         projectMonth:"Project Month",
         projectStatus:"Status",
+        totalProgress:"Total",
+        ownManpowerProgress:"Own Manpower",
+        outsourcedManpowerProgress:"Outsourced Manpower",
+        technicalServiceProgress:"Tech Service",
+        capexProgress:"CAPEX",
+        cloudProgress:"Cloud",
+        otherProgress:"Other",
+        manhourInternalProgress:"Manhour Internal",
+        manhourExternalProgress:"Manhour External",
+        projectStatus:"Status",
+        updateDate:"Update Date",
     },
     dialog:{
         export:"Data Export",
         import:"Data Import",
+        manhourInternalImportTips:"1.Before import,System will delete this month data；2.Company name will be removed；3.Public Project name will replaced by task name；4.New Project will be insert into Project List automatically。"
     },
+    dataSummary:"Data Summary",
+    projectSummay:"Project Summary",
+    budget:"Budget",
+    actual:"Actual",
 };
