@@ -123,7 +123,7 @@ const projectStatusChange = () => {
 const doProjectSummary= ()=>{
     collecting.value = true;
     generateProjectSummay(psForm).then((res)=>{
-        console.log(res.data);
+        ElMessage({ type: 'success', message: t('tips.successGenerate') + res.data + " 行" });
     }).finally(()=>{
         collecting.value = false;
     })

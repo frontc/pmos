@@ -16,3 +16,8 @@ export const toFloat = (value) =>{
     if(isNumber(value)) return parseFloat(value);
     return 0;
 }
+
+export const fixed=(value,position)=>{
+    if(value===0.0) return 0;
+    return (value*100).toFixed(position);
+}

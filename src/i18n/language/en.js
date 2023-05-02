@@ -58,6 +58,8 @@ export default{
         BussinessList:"Bussiness Category",
         ProjectList:"Project List",
         DataWork:"Data Work",
+        AnalysisTrace:"Analysis",
+        ProjectProgress:"Project Progress",
     },    
     action:{
         operation:"Operation",

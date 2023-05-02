@@ -73,6 +73,21 @@ const routes = [
                 ]
             },
             {
+                path: "analysis",
+                name: "AnalysisTrace",
+                meta: { requireAuth: true },
+                redirect:'/analysis/project-progress',
+                component:PageFrame,
+                children:[
+                    {
+                        path:"project-progress",
+                        name:"ProjectProgress",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/analysis/ProjectProgress.vue')
+                    },
+                ]
+            },
+            {
                 path: "basic",
                 name: "Basic",
                 meta: { requireAuth: true },

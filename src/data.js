@@ -1,8 +1,20 @@
 export const menuTreeData =[
     {
+        name:'AnalysisTrace',
+        path:'/analysis',
+        icon:"histogram",
+        children:[
+            {
+                name:'ProjectProgress',
+                path:"/analysis/project-progress",
+                icon:"Tickets",
+            },
+        ]
+    },
+    {
         name:'Expenditure',
         path:'/expenditure',
-        icon:"list",
+        icon:"checked",
         children:[
             {
                 name:'OwnManpower',

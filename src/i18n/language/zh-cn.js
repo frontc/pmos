@@ -46,6 +46,8 @@ export default{
         blankError:"不可包含空格",
         target:"目标",
         all:"---全部---",
+        projectStatus:"项目状态",
+        totalProgress:"总体进度(0-1)",
     },
     tips404:"页面找不到了...",
     backHome:"返回首页",
@@ -60,6 +62,8 @@ export default{
         BussinessList:"业务类别",
         ProjectList:"项目清单",
         DataWork:"数据作业",
+        AnalysisTrace:"分析追踪",
+        ProjectProgress:"项目进度",
     },
     action:{
         operation:"操作",
@@ -133,6 +137,18 @@ export default{
         scheduledEndDate:"项目止",
         projectMonth:"立项月份",
         projectStatus:"状态",
+        totalProgress:"总计",
+        ownManpowerProgress:"自有人力",
+        outsourcedManpowerProgress:"外协人力",
+        technicalServiceProgress:"技术服务费",
+        capexProgress:"CAPEX",
+        cloudProgress:"云资源",
+        otherProgress:"其他",
+        manhourInternalProgress:"自有人月",
+        manhourExternalProgress:"外协人月",
+        projectStatus:"状态",
+        updateDate:"更新日期",
+
     },
     dialog:{
         export:"数据导出",
@@ -141,4 +157,6 @@ export default{
     },
     dataSummary:"数据汇总",
     projectSummay:"项目汇总",
+    budget:"预算",
+    actual:"实际",
 };

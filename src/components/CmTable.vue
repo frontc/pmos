@@ -74,7 +74,7 @@ const props = defineProps({
 const emit = defineEmits(['handleEdit', 'handleDelete']);
 
 const { t } = useI18n();
-const loading = ref(false)
+const loading = ref(false);
 const pageRequest = reactive({
   pageNum: 1,
   pageSize: 10,

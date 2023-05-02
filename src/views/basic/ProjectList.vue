@@ -24,7 +24,6 @@
                     <el-button icon="download" type="primary" @click="exportExcel" :loading="downloading">{{ t('action.export') }}</el-button>
                 </el-form-item>
             </el-form>
-
         </div>
         <!--表格区-->
         <cm-table id="data-table" ref="tableRef" :get-page="listPage" :filters="filters" :columns="columns"
@@ -85,7 +84,6 @@ const bizTypeTree = ref([]);
 getBizTypeTree().then((res) => {
     bizTypeTree.value = res.data;
 });
-
 const columns = computed(() => [
     { prop: "uid", label: t("thead.uid"), minWidth: 15 },
     { prop: "projectCode", label: t("thead.projectCode"), minWidth: 40 },
