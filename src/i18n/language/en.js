@@ -48,6 +48,9 @@ export default{
         all:"---ALL---",
         projectStatus:"Project Status",
         totalProgress:"Total Progress (0-1)",
+        budgetDept:"Budget Dept",
+        possibleOccurrence:"Possible Occurrence",
+
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
