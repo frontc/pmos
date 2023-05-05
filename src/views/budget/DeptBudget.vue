@@ -12,8 +12,7 @@
                 <!--预算部门下拉框-->
                 <el-form-item>
                     <el-select v-model="filters.budgetDept" clearable :placeholder="t('form.budgetDept')">
-                        <el-option v-for="item in deptOptions" :key="item.uid" :label="item.deptName"
-                            :value="item.deptName" />
+                        <el-option v-for="item in deptOptions" :key="item" :label="item" :value="item" />
                     </el-select>
                 </el-form-item>
                 <!--业务类型下拉框-->
@@ -52,8 +51,16 @@
             </el-form>
         </div>
         <!--明细表格区-->
-        <cm-table ref="detailTableRef" :get-page="listPageDetail" :filters="filters" :columns="columns"
-            :showOperation="false" :showBatchDelete="false" :max-height="tableHeight">
+        <cm-table ref="detailTableRef" :get-page="listPageDetail" :filters="filters" :columns="detailColumns"
+            :showOperation="false" :showBatchDelete="false" :max-height="tableHeight" v-show="showDetailTable" show-summary>
+        </cm-table>
+        <!--按部门汇总表格区-->
+        <cm-table ref="deptSummaryTableRef" :get-page="listPageDept" :filters="filters" :columns="deptSummaryColumns"
+            :showOperation="false" :showBatchDelete="false" :max-height="tableHeight" v-show="showDeptSummayTable" show-summary>
+        </cm-table>
+        <!--按业务汇总表格区-->
+        <cm-table ref="bizSummaryTableRef" :get-page="listPageBiz" :filters="filters" :columns="bizSummaryColumns"
+            :showOperation="false" :showBatchDelete="false" :max-height="tableHeight" v-show="showBizSummmayTable" show-summary>
         </cm-table>
     </div>
     <!--数据维护弹框-->
@@ -92,9 +99,7 @@
                     <el-icon size="large">
                         <Upload />
                     </el-icon>
-                    <el-tooltip :content="t('dialog.manhourInternalImportTips')">
-                        <span class="card-header-title">{{ t('dialog.import') }}</span>
-                    </el-tooltip>
+                    <span class="card-header-title">{{ t('dialog.import') }}</span>
                 </div>
             </template>
             <div>
@@ -102,7 +107,7 @@
                     <el-upload ref="uploadRef" action :http-request="uploadRequest" v-model:file-list="fileList"
                         :auto-upload="false" :limit="1" accept=".xls,.xlsx">
                         <!--年份下拉框-->
-                        <span class="margin_10">{{ t('form.month') }}</span>
+                        <span class="margin_10">{{ t('form.year') }}</span>
                         <el-select v-model="uploadFilters.budgetYear">
                             <el-option v-for="item in budgetYearOptions" :key="item" :label="item" :value="item" />
                         </el-select>
@@ -123,7 +128,7 @@
     </el-dialog>
 </template>
 <script setup>
-import { listPageDetail, download } from '@/apis/budget/dept-budget';
+import { listPageDetail, listPageDept, listPageBiz, download, upload, getBudgetDept } from '@/apis/budget/dept-budget';
 import { getBizTypeTree, getBizType1, getBizTypeSons } from '@/apis/basic/biz-list';
 import { budgetYearOptions, possibleOccurrenceOptions } from '@/data';
 const store = useStore();
@@ -135,7 +140,10 @@ const filters = reactive({
     bizTypeSelections: [],
     possibleOccurrence: '',
 });
-const deptOptions = computed(() => { return store.state.departments });
+const deptOptions = ref([]);
+getBudgetDept().then((res) => {
+    deptOptions.value = res.data;
+});
 const cascaderProps = {
     multiple: true,
     checkStrictly: false,
@@ -145,17 +153,34 @@ const bizTypeTree = ref([]);
 getBizTypeTree().then((res) => {
     bizTypeTree.value = res.data;
 });
+//表格可见性
+const showDetailTable = ref(true);
+const showDeptSummayTable = ref(false);
+const showBizSummmayTable = ref(false);
 //视图模式
 const viewer = ref('明细');
 const changeViewer = () => {
-    console.log(viewer.value);
+    if(viewer.value==='明细'){
+        showDetailTable.value=true;
+        showDeptSummayTable.value=false;
+        showBizSummmayTable.value=false;
+    }else if(viewer.value==='部门'){
+        showDetailTable.value=false;
+        showDeptSummayTable.value=true;
+        showBizSummmayTable.value=false;
+    }else{
+        showDetailTable.value=false;
+        showDeptSummayTable.value=false;
+        showBizSummmayTable.value=true;
+    }
+    findPage();
 }
-//表格
+//明细表格
 const detailTableRef = ref();
-const columns = computed(() => [
+const detailColumns = computed(() => [
     { prop: "uid", label: t("thead.uid"), minWidth: 8 },
-    { prop: "budgetDept", label: t("thead.budgetDept"), minWidth: 14 },
-    { prop: "item", label: t("thead.item"), minWidth: 18 },
+    { prop: "budgetDept", label: t("thead.budgetDept"), minWidth: 15 },
+    { prop: "item", label: t("thead.item"), minWidth: 20 },
     { prop: "itemDesc", label: t("thead.itemDesc"), minWidth: 12 },
     { prop: "totalBudget", label: t("thead.totalBudget"), minWidth: 10 },
     { prop: "opexBudget", label: t("thead.opexBudget"), minWidth: 10 },
@@ -167,13 +192,48 @@ const columns = computed(() => [
     { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 13 },
     { prop: "manhourInternal", label: t("thead.manhourInternal"), minWidth: 13 },
     { prop: "manhourExternal", label: t("thead.manhourExternal"), minWidth: 13 },
-    { prop: "bizType1", label: t("thead.bizType1"), minWidth: 10 },
-    { prop: "bizType2", label: t("thead.bizType2"), minWidth: 10 },
-    { prop: "possibleOccurrence", label: t("thead.possibleOccurrence"), minWidth: 9 },
+    { prop: "bizType1", label: t("thead.bizType1"), minWidth: 13 },
+    { prop: "bizType2", label: t("thead.bizType2"), minWidth: 13 },
 ]);
 
+//部门汇总表格
+const deptSummaryTableRef = ref();
+const deptSummaryColumns = computed(() => [
+    { prop: "budgetDept", label: t("thead.budgetDept"), minWidth: 15 },
+    { prop: "totalBudget", label: t("thead.totalBudget"), minWidth: 10 },
+    { prop: "opexBudget", label: t("thead.opexBudget"), minWidth: 10 },
+    { prop: "ownManpowerBudget", label: t("thead.ownManpowerBudget"), minWidth: 13 },
+    { prop: "outsourcedManpowerBudget", label: t("thead.outsourcedManpowerBudget"), minWidth: 13 },
+    { prop: "technicalServiceBudget", label: t("thead.technicalServiceBudget"), minWidth: 10 },
+    { prop: "cloudBudget", label: t("thead.cloudBudget"), minWidth: 10 },
+    { prop: "otherBudget", label: t("thead.otherBudget"), minWidth: 13 },
+    { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 13 },
+    { prop: "manhourInternal", label: t("thead.manhourInternal"), minWidth: 13 },
+    { prop: "manhourExternal", label: t("thead.manhourExternal"), minWidth: 13 },
+]);
+
+//业务汇总表格
+const bizSummaryTableRef = ref();
+const bizSummaryColumns = computed(() => [
+    { prop: "bizType1", label: t("thead.bizType1"), minWidth: 13 },
+    { prop: "bizType2", label: t("thead.bizType2"), minWidth: 13 },
+    { prop: "totalBudget", label: t("thead.totalBudget"), minWidth: 10 },
+    { prop: "opexBudget", label: t("thead.opexBudget"), minWidth: 10 },
+    { prop: "ownManpowerBudget", label: t("thead.ownManpowerBudget"), minWidth: 13 },
+    { prop: "outsourcedManpowerBudget", label: t("thead.outsourcedManpowerBudget"), minWidth: 13 },
+    { prop: "technicalServiceBudget", label: t("thead.technicalServiceBudget"), minWidth: 10 },
+    { prop: "cloudBudget", label: t("thead.cloudBudget"), minWidth: 10 },
+    { prop: "otherBudget", label: t("thead.otherBudget"), minWidth: 13 },
+    { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 13 },
+    { prop: "manhourInternal", label: t("thead.manhourInternal"), minWidth: 13 },
+    { prop: "manhourExternal", label: t("thead.manhourExternal"), minWidth: 13 },
+]);
+
+//TODO:根据当前的视图刷新对应表格
 const findPage = () => {
-    detailTableRef.value.reload();
+    if (showDetailTable.value) detailTableRef.value.reload();
+    if (showDeptSummayTable.value) deptSummaryTableRef.value.reload();
+    if (showBizSummmayTable.value) bizSummaryTableRef.value.reload();
 }
 
 //弹框页面相关
@@ -213,12 +273,51 @@ const doDownload = () => {
         downloading.value = false;
     });
 }
-
+//上传
+const uploadRef = ref();
 const uploading = ref(false);
 const uploadFilters = reactive({
     budgetYear: '2023',
     budgetDept: '',
 });
+const fileList = ref([]);
+const submitUpload = () => {
+    if (fileList.value.length === 0) {
+        ElMessage({ message: t('tips.fileRequired'), type: 'error', showClose: true });
+        return;
+    }
+    ElMessageBox
+        .confirm(t('tips.uploadWarning'), t('tips.warning'), { confirmButtonText: t('action.confirm'), cancelButtonText: t('action.cancel'), type: 'warning' })
+        .then(() => { uploadRef.value.submit(); }).catch();
+}
+function uploadRequest() {
+    let params = new FormData();
+    params.append('file', fileList.value[0].raw);
+    uploading.value = true;
+    let data;
+    if (uploadFilters.budgetDept === '') {
+        data = {
+            budgetYear: uploadFilters.budgetYear,
+            budgetDept: 'all'
+        }
+    } else {
+        data = {
+            budgetYear: uploadFilters.budgetYear,
+            budgetDept: uploadFilters.budgetDept
+        }
+    }
+    upload(data, params).then(res => {
+        if (res.data >= 0) {
+            ElMessage({ type: "success", message: t('tips.successImport') + res.data });
+            findPage();
+        } else {
+            ElMessage({ type: "error", message: t('tips.containsDirtyDataImport') + res.data });
+        }
+    }).finally(() => {
+        uploading.value = false;
+    });
+}
+
 
 
 const tableHeight = ref();
@@ -236,8 +335,13 @@ onMounted(() => {
     margin-right: 60px;
 }
 
-.export {
+.maintenance {
     float: right;
     padding-right: 0;
+}
+
+.margin_10 {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 </style>

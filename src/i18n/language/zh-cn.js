@@ -90,10 +90,12 @@ export default{
         validateFailed:"校验失败",
         monthRequired:"请选择月份",
         fileRequired:"请选择文件",
-        uploadWarning:"上传将清除现有该月数据，建议先导出备份，确认导入?",
+        uploadWarning:"上传将清除现有对应范围数据，建议先导出备份，确认导入?",
         warning:"警告",
         successImport:"成功导入数据：",
-        successGenerate:"成功生成数据："
+        successGenerate:"成功生成数据：",
+        containsDirtyDataImport:"未能导入!数据中存在脏数据：",
+
     },
     thead:{
         uid:"ID",
@@ -166,7 +168,7 @@ export default{
     dialog:{
         export:"数据导出",
         import:"数据导入",
-        manhourInternalImportTips:"1.导入时将清除当前月数据；2.部门名称将去除公司名；3.公共项目将用任务名覆盖项目名；4.新增项目将自动在项目映射中新增。"
+        manhourInternalImportTips:"1.导入时将清除当前月数据；2.部门名称将去除公司名；3.公共项目将用任务名覆盖项目名；4.新增项目将自动在项目映射中新增。",
     },
     dataSummary:"数据汇总",
     projectSummay:"项目汇总",
