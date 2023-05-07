@@ -84,7 +84,7 @@
                 <!--部门下拉框-->
                 <span class="margin_10">{{ t('form.budgetDept') }}</span>
                 <el-select v-model="downloadFilters.budgetDept" clearable :placeholder="t('form.select')">
-                    <el-option v-for="item in deptOptions" :key="item.uid" :label="item.deptName" :value="item.deptName" />
+                    <el-option v-for="item in deptOptions" :key="item" :label="item" :value="item" />
                 </el-select>
                 <el-button type="primary" @click="doDownload" class="margin_10" slot="default" :loading="downloading">{{
                     t('form.download')
@@ -114,8 +114,8 @@
                         <!--部门下拉框-->
                         <span class="margin_10">{{ t('form.budgetDept') }}</span>
                         <el-select v-model="uploadFilters.budgetDept" clearable :placeholder="t('form.select')">
-                            <el-option v-for="item in deptOptions" :key="item.uid" :label="item.deptName"
-                                :value="item.deptName" />
+                            <el-option v-for="item in deptOptions" :key="item" :label="item"
+                                :value="item" />
                         </el-select>
                         <el-button type="primary" class="margin_10" slot="trigger">{{ t('form.selectFile') }}</el-button>
                     </el-upload>
@@ -208,8 +208,8 @@ const deptSummaryColumns = computed(() => [
     { prop: "cloudBudget", label: t("thead.cloudBudget"), minWidth: 10 },
     { prop: "otherBudget", label: t("thead.otherBudget"), minWidth: 13 },
     { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 13 },
-    { prop: "manhourInternal", label: t("thead.manhourInternal"), minWidth: 13 },
-    { prop: "manhourExternal", label: t("thead.manhourExternal"), minWidth: 13 },
+    { prop: "manhourInternalYear", label: t("thead.manhourInternalYear"), minWidth: 13 },
+    { prop: "manhourExternalYear", label: t("thead.manhourExternalYear"), minWidth: 13 },
 ]);
 
 //业务汇总表格
@@ -225,8 +225,8 @@ const bizSummaryColumns = computed(() => [
     { prop: "cloudBudget", label: t("thead.cloudBudget"), minWidth: 10 },
     { prop: "otherBudget", label: t("thead.otherBudget"), minWidth: 13 },
     { prop: "capexBudget", label: t("thead.capexBudget"), minWidth: 13 },
-    { prop: "manhourInternal", label: t("thead.manhourInternal"), minWidth: 13 },
-    { prop: "manhourExternal", label: t("thead.manhourExternal"), minWidth: 13 },
+    { prop: "manhourInternalYear", label: t("thead.manhourInternalYear"), minWidth: 13 },
+    { prop: "manhourExternalYear", label: t("thead.manhourExternalYear"), minWidth: 13 },
 ]);
 
 //TODO:根据当前的视图刷新对应表格

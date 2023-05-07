@@ -161,6 +161,8 @@ export default{
         cloudBudget:"云资源",
         manhourInternal:"自有人月",
         manhourExternal:"外协人月",
+        manhourInternalYear:"自有人年",
+        manhourExternalYear:"外协人年",
         bizType1:"大类",
         bizType2:"小类",
         possibleOccurrence:"可能",
