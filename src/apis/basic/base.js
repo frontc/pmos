@@ -27,3 +27,10 @@ export const getProjectStatus = () => {
         method:'get'
     })
 }
+
+export const getVersion = () => {
+    return request({
+        url:'/basic/getVersion',
+        method:'get'
+    })
+}
