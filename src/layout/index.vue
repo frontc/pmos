@@ -41,7 +41,7 @@ getProjectStatus().then(res=>{
 getVersion().then(res=>{
     store.commit('setVersion',res.data);
 })
-
+console.log(import.meta.env.MODE+":"+import.meta.env.VITE_BASE_URL)
 </script>
 <style lang="scss">
 .page-container {
