@@ -95,6 +95,12 @@ const routes = [
                 component:PageFrame,
                 children:[
                     {
+                        path:"dept-list",
+                        name:"DeptList",
+                        meta: { requireAuth: true },
+                        component: () => import('@/views/basic/Departments.vue')
+                    },
+                    {
                         path:"project-list",
                         name:"ProjectList",
                         meta: { requireAuth: true },

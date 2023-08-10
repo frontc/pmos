@@ -56,6 +56,11 @@ export const menuTreeData = [
                 icon: "Tickets",
             },
             {
+                name: 'DeptList',
+                path: "/basic/dept-list",
+                icon: "Tickets",
+            },
+            {
                 name: 'ProjectList',
                 path: "/basic/project-list",
                 icon: "Tickets",

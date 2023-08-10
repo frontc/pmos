@@ -24,6 +24,7 @@ export default{
         employeeName:"Employee Name",
         select:"Select",
         projectNameRequired:"Please enter project name",
+        deptNameRequired:"Please enter department name",
         projectNameError:"Project name's length must between 2 and 60",
         bizType1Required:"Business Type should not be empty",
         bizType2Required:"Business Type should not be empty",
@@ -50,7 +51,7 @@ export default{
         totalProgress:"Total Progress (0-1)",
         budgetDept:"Budget Dept",
         possibleOccurrence:"Possible Occurrence",
-
+        deptName:"Department",
     },
     tips404:"Sorry,Page Not Found!",
     backHome:"Back to HomePage",
@@ -64,6 +65,7 @@ export default{
         Basic:"Basic Data",
         BussinessList:"Bussiness Category",
         ProjectList:"Project List",
+        DeptList:"Departments List",
         DataWork:"Data Work",
         AnalysisTrace:"Analysis",
         ProjectProgress:"Project Progress",
@@ -152,6 +154,7 @@ export default{
         manhourExternalProgress:"Manhour External",
         projectStatus:"Status",
         updateDate:"Update Date",
+        deptName:"Department Name",
     },
     dialog:{
         export:"Data Export",
